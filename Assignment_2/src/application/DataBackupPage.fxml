@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DataBackup">
+   <top>
+      <Pane prefHeight="102.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="MainMenuBtn" layoutX="575.0" layoutY="63.0" mnemonicParsing="false" onAction="#btnMainMenu" prefHeight="25.0" prefWidth="191.0" text="Return To Menu" />
+            <Button fx:id="exitBtn" layoutX="689.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnExit" prefHeight="25.0" prefWidth="77.0" text="Exit" />
+            <Label layoutX="14.0" layoutY="12.0" prefHeight="29.0" prefWidth="87.0" text="LMVM">
+               <font>
+                  <Font name="Broadway" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="49.0" prefHeight="29.0" prefWidth="292.0" underline="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="49.0" prefHeight="29.0" prefWidth="218.0" text="File Serialization - Backup">
+               <font>
+                  <Font name="Berlin Sans FB" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </top>
+   <left>
+      <Pane prefHeight="386.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Separator layoutY="-2.0" prefHeight="4.0" prefWidth="800.0" />
+            <Label layoutX="12.0" layoutY="12.0" prefHeight="29.0" prefWidth="178.0" text="Import Backup">
+               <font>
+                  <Font name="Berlin Sans FB" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="412.0" layoutY="12.0" prefHeight="29.0" prefWidth="117.0" text="Backup Data">
+               <font>
+                  <Font name="Berlin Sans FB" size="18.0" />
+               </font>
+            </Label>
+            <Separator layoutX="397.0" orientation="VERTICAL" prefHeight="498.0" prefWidth="6.0" />
+            <Label layoutX="12.0" layoutY="65.0" prefHeight="29.0" prefWidth="143.0" text="Import Transaction Data" underline="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <Button layoutX="282.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Import Backup" />
+            <Label layoutX="412.0" layoutY="65.0" prefHeight="29.0" prefWidth="155.0" text="Backup Transaction Data" underline="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <Button layoutX="672.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Backup" />
+            <Label layoutX="412.0" layoutY="209.0" prefHeight="29.0" prefWidth="155.0" text="Backup Master Data" underline="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="209.0" prefHeight="29.0" prefWidth="143.0" text="Import Master Data" underline="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <Button layoutX="282.0" layoutY="250.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Import Backup" />
+            <Label layoutX="413.0" layoutY="93.0" prefHeight="29.0" prefWidth="233.0" text="- Backups orders, venues and requests">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="93.0" prefHeight="29.0" prefWidth="233.0" text="- Imports orders, venues and requests">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <Button layoutX="672.0" layoutY="250.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Backup" />
+            <Label layoutX="14.0" layoutY="248.0" prefHeight="29.0" prefWidth="233.0" text="- Imports users and clients">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="413.0" layoutY="248.0" prefHeight="29.0" prefWidth="233.0" text="- Backups users and clients">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </left>
+</BorderPane>
