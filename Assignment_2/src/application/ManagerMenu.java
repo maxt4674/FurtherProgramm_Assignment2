@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 public class ManagerMenu extends DefaultMenu {
 	
 	public ObservableList<User> returnUsers() throws SQLException{
-		ObservableList<User> users = FXCollections.observableArrayList();;
+		ObservableList<User> users = FXCollections.observableArrayList();
 		
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -67,4 +67,5 @@ public class ManagerMenu extends DefaultMenu {
 			return false;
 		}
 	}
+	
 }

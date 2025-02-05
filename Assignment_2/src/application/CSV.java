@@ -106,8 +106,53 @@ public class CSV {
 		}
 	}
 	
-	public void btnImportVenues(ActionEvent event) {
-		
+	public void btnImportVenues(ActionEvent event) throws SQLException {
+		String filename = venuesFileNameField.getText().toString();
+		if(filename.length() > 0) {
+			if(isFileValid(filename)) {
+				File venFile = new File("src/CSVFiles/" + filename);
+				Scanner fs;
+				
+				try {
+					fs = new Scanner(venFile);
+					@SuppressWarnings("unused")
+					String heading = fs.nextLine();
+					ArrayList<ArrayList<String>> venueData = new ArrayList<ArrayList<String>>();
+					
+					while(fs.hasNextLine()) {
+						String reqData = fs.nextLine();
+						String[] seperatedData = reqData.split(",");
+						ArrayList<String> row = new ArrayList<String>();
+						
+						for(int i = 0; i < seperatedData.length; i++) {
+							row.add(seperatedData[i]);
+						}
+						
+						venueData.add(row);
+					}
+					
+					JDBC conn = new JDBC();
+					conn.connectToDB();
+					if(conn.importVenueDataCSV(venueData)) {
+						alertLabel.setText("Venues Data Imported!");
+					} else {
+						alertLabel.setText("Venues Data Failed to import!");
+					}
+					
+					conn.closeConnectionToDB();
+					
+					fs.close();
+					
+					
+				} catch (FileNotFoundException e) {
+
+				}
+			} else {
+				alertLabel.setText("Must be a valid venues file!");
+			}
+		} else {
+			alertLabel.setText("Please input a filename to import venues!");
+		}
 	}
 	
 	public boolean isFileValid(String filename) {

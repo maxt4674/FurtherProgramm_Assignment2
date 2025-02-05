@@ -207,4 +207,64 @@ public class JDBC {
 		
 		return clientID;
 	}
+	
+	public boolean importVenueDataCSV(ArrayList<ArrayList<String>> venueData) {
+		Statement venueDataImport;
+		try {
+			venueDataImport = connection.createStatement();
+			venueDataImport.execute("DELETE FROM Venues;");
+			
+			for(int i = 0; i < venueData.size(); i++) {
+				int VenueID = i + 1;
+				venueDataImport.execute("INSERT INTO Venues (VenueID, Name, Capacity, Suitable_For, Category, Booking_Price) VALUES ('" + VenueID + "','" + venueData.get(i).get(0) + "','" + venueData.get(i).get(1) + "','"+venueData.get(i).get(2)+"','"+venueData.get(i).get(3)+"','"+venueData.get(i).get(4)+"');");
+			}
+			
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public ResultSet venueReturnDB(String name, String category) throws SQLException {
+		Statement venueReturn = connection.createStatement();
+		ResultSet venues = null;
+		
+		if(name.length() < 1 && category.length() < 1) {
+			venues = venueReturn.executeQuery("SELECT * FROM Venues;");
+		} else if(name.length() < 1 && category.length() > 0) {
+			venues = venueReturn.executeQuery("SELECT * FROM Venues WHERE Category = '"+category+"';");
+		} else if(name.length() > 0 && category.length() < 1) {
+			venues = venueReturn.executeQuery("SELECT * FROM Venues WHERE Name LIKE '%"+name+"%';");
+		} else if(name.length() > 0 && category.length() > 0) {
+			venues = venueReturn.executeQuery("SELECT * FROM Venues WHERE Category = '"+category+"' AND Name LIKE '%"+name+"%';");
+		}
+		
+		return venues;
+	}
+	
+	public ResultSet returnCategories() throws SQLException {
+		Statement categoryReturn = connection.createStatement();
+		ResultSet categories = categoryReturn.executeQuery("SELECT DISTINCT Category FROM Venues;");
+		return categories;
+	}
+	
+	public ResultSet returnVenueDetails(String name) throws SQLException {
+		Statement venueDetReturn = connection.createStatement();
+		ResultSet venueDetails = venueDetReturn.executeQuery("SELECT Capacity, Suitable_For, Category, Booking_Price FROM Venues WHERE Name = '"+name+"'");
+		return venueDetails;
+	}
+	
+	public ResultSet returnEvents() throws SQLException {
+		Statement eventReturn = connection.createStatement();
+		ResultSet events = eventReturn.executeQuery("SELECT Events.EventID, Events.Title, Events.Artist, Events.Date, Events.Time, Events.Duration, Events.Target_Audience, Events.Type, Events.Category, Events.BookingID, Clients.ClientName FROM Events INNER JOIN Clients ON Events.ClientID = Clients.ClientID");
+		return events;
+	}
+	
+	public ResultSet returnEventDetails(String name) throws SQLException {
+		Statement eventDetReturn = connection.createStatement();
+		ResultSet eventDetails = eventDetReturn.executeQuery("SELECT Events.Artist, Events.Date, Events.Time, Events.Duration, Events.Target_Audience, Events.Type, Events.Category, Clients.ClientName FROM Events INNER JOIN Clients ON Events.ClientID = Clients.ClientID WHERE Events.Title = '"+name+"'");
+		return eventDetails;
+	}
 }

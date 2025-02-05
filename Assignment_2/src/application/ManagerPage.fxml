@@ -35,12 +35,13 @@
                            <children>
                               <BorderPane prefHeight="487.0" prefWidth="800.0">
                                  <center>
-                                    <TableView prefHeight="402.0" prefWidth="565.0" BorderPane.alignment="CENTER">
+                                    <TableView fx:id="eventViewMain" onMouseClicked="#onClickEventRow" prefHeight="402.0" prefWidth="565.0" BorderPane.alignment="CENTER">
                                       <columns>
-                                        <TableColumn prefWidth="116.0" text="Event" />
-                                          <TableColumn prefWidth="109.0" text="Artist" />
-                                          <TableColumn prefWidth="109.0" text="Type" />
-                                          <TableColumn prefWidth="115.0" text="Client" />
+                                        <TableColumn fx:id="eventNameCol" prefWidth="94.0" text="Event" />
+                                          <TableColumn fx:id="eventArtistCol" prefWidth="92.0" text="Artist" />
+                                          <TableColumn fx:id="eventTypeCol" prefWidth="88.0" text="Type" />
+                                          <TableColumn fx:id="eventClientCol" prefWidth="88.0" text="Client" />
+                                          <TableColumn fx:id="eventBookingStatusCol" prefWidth="88.0" text="Has Booking" />
                                       </columns>
                                     </TableView>
                                  </center>
@@ -55,15 +56,15 @@
                                        <children>
                                           <Pane layoutX="20.0" layoutY="-1.0" prefHeight="435.0" prefWidth="278.0">
                                              <children>
-                                                <Label layoutX="22.0" prefHeight="29.0" prefWidth="164.0" text="Event: *Selected Event:*" underline="true">
+                                                <Label fx:id="selectedEventLabel" layoutX="22.0" prefHeight="29.0" prefWidth="164.0" text="Event: *Selected Event:*" underline="true">
                                                    <font>
                                                       <Font name="Berlin Sans FB" size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <TableView layoutX="22.0" layoutY="29.0" prefHeight="405.0" prefWidth="242.0">
+                                                <TableView fx:id="eventViewDetailed" layoutX="22.0" layoutY="29.0" prefHeight="405.0" prefWidth="242.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="75.0" text="Title" />
-                                                    <TableColumn prefWidth="166.0" text="Info" />
+                                                    <TableColumn fx:id="eventItemCol" prefWidth="75.0" text="Title" />
+                                                    <TableColumn fx:id="eventInfoCol" prefWidth="166.0" text="Info" />
                                                   </columns>
                                                 </TableView>
                                              </children>
@@ -85,17 +86,17 @@
                            <children>
                               <BorderPane prefHeight="487.0" prefWidth="800.0">
                                  <center>
-                                    <TableView prefHeight="365.0" prefWidth="261.0" BorderPane.alignment="CENTER">
+                                    <TableView fx:id="venueViewMain" onMouseClicked="#onClickVenueRow" prefHeight="365.0" prefWidth="261.0" BorderPane.alignment="CENTER">
                                        <columns>
-                                          <TableColumn prefWidth="127.0" text="Venue Name" />
-                                          <TableColumn prefWidth="128.0" text="Category" />
+                                          <TableColumn fx:id="venueNameCol" prefWidth="127.0" text="Venue Name" />
+                                          <TableColumn fx:id="venueCategoryCol" prefWidth="128.0" text="Category" />
                                        </columns>
                                     </TableView>
                                  </center>
                                  <top>
                                     <Pane prefHeight="91.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <TextField alignment="CENTER" layoutX="33.0" layoutY="39.0" prefHeight="25.0" prefWidth="220.0" promptText="Venue Name" />
+                                          <TextField fx:id="venueNameField" alignment="CENTER" layoutX="33.0" layoutY="39.0" prefHeight="25.0" prefWidth="220.0" promptText="Venue Name" />
                                           <Label layoutX="33.0" prefHeight="29.0" prefWidth="217.0" text="Search for Venues" underline="true">
                                              <font>
                                                 <Font name="Berlin Sans FB" size="18.0" />
@@ -106,13 +107,13 @@
                                                 <Font name="Berlin Sans FB" size="10.0" />
                                              </font>
                                           </Label>
-                                          <MenuButton alignment="CENTER" contentDisplay="CENTER" layoutX="295.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="246.0" text="Category" textAlignment="CENTER">
+                                          <MenuButton fx:id="venueCategoryMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="295.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="246.0" text="Category" textAlignment="CENTER">
                                             <items>
                                               <MenuItem mnemonicParsing="false" text="Action 1" />
                                               <MenuItem mnemonicParsing="false" text="Action 2" />
                                             </items>
                                           </MenuButton>
-                                          <Button layoutX="578.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="Search" underline="true" />
+                                          <Button fx:id="venueSearchBtn" layoutX="578.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnSearchVenue" prefHeight="25.0" prefWidth="179.0" text="Search" underline="true" />
                                        </children>
                                     </Pane>
                                  </top>
@@ -124,15 +125,15 @@
                                        <children>
                                           <Pane layoutX="77.0" layoutY="-1.0" prefHeight="435.0" prefWidth="221.0">
                                              <children>
-                                                <Label layoutX="22.0" prefHeight="29.0" prefWidth="170.0" text="Venue: *Selected Venue:*" underline="true">
+                                                <Label fx:id="selectedVenueLabel" layoutX="22.0" prefHeight="29.0" prefWidth="170.0" text="Venue: *Selected Venue:*" underline="true">
                                                    <font>
                                                       <Font name="Berlin Sans FB" size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <TableView layoutX="22.0" layoutY="29.0" prefHeight="339.0" prefWidth="391.0">
+                                                <TableView fx:id="venueViewDetailed" layoutX="22.0" layoutY="29.0" prefHeight="339.0" prefWidth="391.0">
                                                    <columns>
-                                                      <TableColumn prefWidth="123.0" text="Title" />
-                                                      <TableColumn prefWidth="339.0" text="Info" />
+                                                      <TableColumn fx:id="venueItemCol" prefWidth="123.0" text="Title" />
+                                                      <TableColumn fx:id="venueInfoCol" prefWidth="267.0" text="Info" />
                                                    </columns>
                                                 </TableView>
                                              </children>
