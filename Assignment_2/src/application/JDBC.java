@@ -443,5 +443,192 @@ public class JDBC {
 		return 0;
 	}
 
+	public ResultSet returnAutoMatch(String eventName, int stage) throws SQLException {
+		Statement auto = connection.createStatement();
+		ResultSet result = null;
+		ResultSet eventResult = auto.executeQuery("SELECT Target_Audience, Category, Type, Date, Time FROM Events WHERE Title = '"+eventName+"'");
+		String eventAudience = eventResult.getString(1);
+		String eventCategory = eventResult.getString(2);
+		String eventType = eventResult.getString(3);
+		String eventDate = eventResult.getString(4);
+		String eventTime = eventResult.getString(5);
+		ResultSet targetAudienceResult = auto.executeQuery("SELECT VenueID FROM Venues WHERE Capacity < "+eventAudience+";");
+		ArrayList<String> targetAudience = new ArrayList<String>();
+		while(targetAudienceResult.next()) {
+			targetAudience.add(targetAudienceResult.getString(1));
+		}
+		
+		ResultSet categoryResult = auto.executeQuery("SELECT VenueID FROM Venues WHERE Category <> '"+eventCategory+"';");
+		ArrayList<String> category = new ArrayList<String>();
+		while(categoryResult.next()) {
+			category.add(categoryResult.getString(1));
+		}
+		
+		ResultSet typeResult = auto.executeQuery("SELECT VenueID FROM Venues WHERE Suitable_For NOT LIKE '%"+eventType+"%';");
+		ArrayList<String> type = new ArrayList<String>();
+		while(typeResult.next()) {
+			type.add(typeResult.getString(1));
+		}
+		
+		
+		ResultSet dateResult = auto.executeQuery("SELECT Venues.VenueID FROM Venues INNER JOIN Bookings ON Bookings.VenueID = Venues.VenueID AND Bookings.Date = '"+eventDate+"' AND Bookings.Time = '"+eventTime+"';");
+		ArrayList<String> date = new ArrayList<String>();
+		while(dateResult.next()) {
+			date.add(dateResult.getString(1));
+		}
+		
+		ResultSet allVenuesResult = auto.executeQuery("SELECT VenueID FROM Venues;");
+		ArrayList<Integer> intScore = new ArrayList<Integer>();
+		ArrayList<String> allVenues = new ArrayList<String>();
+		while(allVenuesResult.next()) {
+			allVenues.add(allVenuesResult.getString(1));
+		}
+		
+		for(int i = 0; i < allVenues.size(); i++) {
+			int score = 4;
+			for(int j = 0; j < date.size(); j++) {
+				if(allVenues.get(i).equals(date.get(j))) {
+					score -= 1;
+				}
+			}
+			
+			for(int j = 0; j < targetAudience.size(); j++) {
+				if(allVenues.get(i).equals(targetAudience.get(j))) {
+					score -= 1;
+				}
+			}
+			
+			for(int j = 0; j < category.size(); j++) {
+				if(allVenues.get(i).equals(category.get(j))) {
+					score -= 1;
+				}
+			}
+			
+			for(int j = 0; j < type.size(); j++) {
+				if(allVenues.get(i).equals(type.get(j))) {
+					score -= 1;
+				}
+			}
+			
+			intScore.add(score);
+		}
+		
+		if(stage == 1) {
+			ArrayList<Integer> locations = new ArrayList<Integer>();
+			for(int i = 0; i < intScore.size(); i++) {
+				if(intScore.get(i) == 4) {
+					locations.add(i);
+				}
+			}
+			
+			if(locations.size() > 1) {
+				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
+				for(int i = 0; i < locations.size(); i++) {
+					query += allVenues.get(locations.get(i));
+					if(i < locations.size() - 1) {
+						query += ",";
+					}
+				}
+				query += ");";
+				result = auto.executeQuery(query);
+			} else {
+				result = null;
+			}
+		} else if(stage == 2) {
+			ArrayList<Integer> locations = new ArrayList<Integer>();
+			for(int i = 0; i < intScore.size(); i++) {
+				if(intScore.get(i) == 3) {
+					locations.add(i);
+				}
+			}
+			
+			if(locations.size() > 1) {
+				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
+				for(int i = 0; i < locations.size(); i++) {
+					query += allVenues.get(locations.get(i));
+					if(i < locations.size() - 1) {
+						query += ",";
+					}
+				}
+				query += ");";
+				result = auto.executeQuery(query);
+			} else {
+				result = null;
+			}
+		} else if(stage == 3) {
+			ArrayList<Integer> locations = new ArrayList<Integer>();
+			for(int i = 0; i < intScore.size(); i++) {
+				if(intScore.get(i) == 2) {
+					locations.add(i);
+				}
+			}
+			
+			if(locations.size() > 1) {
+				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
+				for(int i = 0; i < locations.size(); i++) {
+					query += allVenues.get(locations.get(i));
+					if(i < locations.size() - 1) {
+						query += ",";
+					}
+				}
+				query += ");";
+				result = auto.executeQuery(query);
+			} else {
+				result = null;
+			}
+		} else if(stage == 4) {
+			ArrayList<Integer> locations = new ArrayList<Integer>();
+			for(int i = 0; i < intScore.size(); i++) {
+				if(intScore.get(i) == 1) {
+					locations.add(i);
+				}
+			}
+			
+			if(locations.size() > 1) {
+				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
+				for(int i = 0; i < locations.size(); i++) {
+					query += allVenues.get(locations.get(i));
+					if(i < locations.size() - 1) {
+						query += ",";
+					}
+				}
+				query += ");";
+				result = auto.executeQuery(query);
+			} else {
+				result = null;
+			}
+		} else if(stage == 5) {
+			ArrayList<Integer> locations = new ArrayList<Integer>();
+			for(int i = 0; i < intScore.size(); i++) {
+				if(intScore.get(i) == 0) {
+					locations.add(i);
+				}
+			}
+			
+			if(locations.size() > 1) {
+				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
+				for(int i = 0; i < locations.size(); i++) {
+					query += allVenues.get(locations.get(i));
+					if(i < locations.size() - 1) {
+						query += ",";
+					}
+				}
+				query += ");";
+				result = auto.executeQuery(query);
+			} else {
+				result = null;
+			}
+		}
+		
+		return result;
+	}
+
+	public String findEventDate(String eventName) throws SQLException {
+		Statement conn = connection.createStatement();
+		ResultSet result = conn.executeQuery("SELECT Date FROM Events WHERE Title = '"+eventName+"'");
+		String date = result.getString(1);
+		return date;
+	}
+
 
 }

@@ -118,6 +118,8 @@ public class Manager {
 	//Auto-Match Feature
 	@FXML
 	private TableView<VenueMatch> venueMatchView;
+	@FXML 
+	private TableColumn<VenueMatch, String> venueNameACol, venueCategoryACol, venueCapacityACol, venueSuitableForACol, venueScoreACol;
 	@FXML
 	private MenuButton venueMatchMenu;
 	@FXML
@@ -462,13 +464,14 @@ public class Manager {
 		editBookingIDField.clear();
 	}
 	
-	public void btnAutoMatch() {
-		String event = venueMatchMenu.getText().toString();
+	public void btnAutoMatch(ActionEvent event) throws SQLException {
+		String eventName = venueMatchMenu.getText().toString();
 		
-		if(event.length() < 1 || event.equals("Event")) {
+		if(eventName.length() < 1 || eventName.equals("Event")) {
 			alertBookingLabel.setText("Please select an event to match!");
 		} else {
-			
+			ManagerMenu menuFunctions = new ManagerMenu();
+			populateVenueMatchTable(menuFunctions.returnAutoMatchScores(eventName));
 		}
 	}
 	
@@ -484,6 +487,16 @@ public class Manager {
 			});
 			venueMatchMenu.getItems().add(item);
 		}
+	}
+	
+	public void onClickAutoMatchRow(MouseEvent event) throws SQLException {
+	    if (venueMatchView.getSelectionModel().getSelectedItem() != null) {
+	    	makeBookingEventField.setText(venueMatchMenu.getText());
+	    	makeBookingVenueField.setText(venueMatchView.getSelectionModel().getSelectedItem().venueNameProperty().get());
+	    	ManagerMenu menuFunctions = new ManagerMenu();
+	    	String eventDate = menuFunctions.getEventDate(venueMatchMenu.getText());
+	    	makeBookingDateField.setText(eventDate);
+	    }	
 	}
 	
 	//For initialising all default variables
@@ -582,6 +595,15 @@ public class Manager {
 		dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 		timeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
 		ordersView.setItems(orders);
+	}
+	
+	private void populateVenueMatchTable(ObservableList<VenueMatch> venueMatchs) {
+		venueNameACol.setCellValueFactory(new PropertyValueFactory<>("venueName"));
+		venueCategoryACol.setCellValueFactory(new PropertyValueFactory<>("category"));
+		venueCapacityACol.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+		venueSuitableForACol.setCellValueFactory(new PropertyValueFactory<>("suitableFor"));
+		venueScoreACol.setCellValueFactory(new PropertyValueFactory<>("score"));
+		venueMatchView.setItems(venueMatchs);
 	}
 
 }

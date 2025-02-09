@@ -431,4 +431,56 @@ public class DefaultMenu{
 		return Orders;
 	}
 	
+	public ObservableList<VenueMatch> returnAutoMatchScores(String eventName) throws SQLException {
+		ObservableList<VenueMatch> autoMatchList = FXCollections.observableArrayList();
+		JDBC conn = new JDBC();
+		conn.connectToDB();
+		ResultSet result = conn.returnAutoMatch(eventName, 1);
+		if(result != null) {
+			while(result.next()) {
+				VenueMatch newAuto = new VenueMatch(result.getString(1), result.getString(2), result.getString(3), result.getString(4), "100");
+				autoMatchList.add(newAuto);
+			}
+		}
+
+		result = conn.returnAutoMatch(eventName, 2);
+		if(result != null) {
+			while(result.next()) {
+				VenueMatch newAuto = new VenueMatch(result.getString(1), result.getString(2), result.getString(3), result.getString(4), "75");
+				autoMatchList.add(newAuto);
+			}
+		}
+		result = conn.returnAutoMatch(eventName, 3);
+		if(result != null) {
+			while(result.next()) {
+				VenueMatch newAuto = new VenueMatch(result.getString(1), result.getString(2), result.getString(3), result.getString(4), "50");
+				autoMatchList.add(newAuto);
+			}
+		}
+		result = conn.returnAutoMatch(eventName, 4);
+		if(result != null) {
+			while(result.next()) {
+				VenueMatch newAuto = new VenueMatch(result.getString(1), result.getString(2), result.getString(3), result.getString(4), "25");
+				autoMatchList.add(newAuto);
+			}
+		}
+		result = conn.returnAutoMatch(eventName, 5);
+		if(result != null) {
+			while(result.next()) {
+				VenueMatch newAuto = new VenueMatch(result.getString(1), result.getString(2), result.getString(3), result.getString(4), "0");
+				autoMatchList.add(newAuto);
+			}
+		}
+		conn.closeConnectionToDB();
+		return autoMatchList;
+	}
+	
+	public String getEventDate(String eventName) throws SQLException {
+		String eventDate = "";
+		JDBC conn = new JDBC();
+		conn.connectToDB();
+		eventDate = conn.findEventDate(eventName);
+		conn.closeConnectionToDB();
+		return eventDate;
+	}
 }

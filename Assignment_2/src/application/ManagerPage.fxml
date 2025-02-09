@@ -171,14 +171,14 @@
                                           <MenuItem mnemonicParsing="false" text="Action 2" />
                                        </items>
                                     </MenuButton>
-                                    <Button fx:id="autoMatchBtn" layoutX="614.0" layoutY="45.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Auto-Match" />
-                                    <TableView fx:id="venueMatchView" layoutX="410.0" layoutY="82.0" prefHeight="147.0" prefWidth="365.0">
+                                    <Button fx:id="autoMatchBtn" layoutX="614.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnAutoMatch" prefHeight="25.0" prefWidth="155.0" text="Auto-Match" />
+                                    <TableView fx:id="venueMatchView" layoutX="410.0" layoutY="82.0" onMouseClicked="#onClickAutoMatchRow" prefHeight="147.0" prefWidth="365.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Venue" />
-                                          <TableColumn prefWidth="75.0" text="Category" />
-                                          <TableColumn prefWidth="75.0" text="Capacity" />
-                                          <TableColumn prefWidth="75.0" text="Suitable For" />
-                                          <TableColumn prefWidth="64.0" text="Score" />
+                                          <TableColumn fx:id="venueNameACol" prefWidth="75.0" text="Venue" />
+                                          <TableColumn fx:id="venueCategoryACol" prefWidth="75.0" text="Category" />
+                                          <TableColumn fx:id="venueCapacityACol" prefWidth="75.0" text="Capacity" />
+                                          <TableColumn fx:id="venueSuitableForACol" prefWidth="75.0" text="Suitable For" />
+                                          <TableColumn fx:id="venueScoreACol" prefWidth="64.0" text="Score" />
                                        </columns>
                                     </TableView>
                                     <Separator layoutX="404.0" layoutY="238.0" prefHeight="0.0" prefWidth="403.0" />
@@ -286,6 +286,11 @@
                                           <TableColumn fx:id="bookingDurationCol" prefWidth="67.0" text="Duration" />
                                        </columns>
                                     </TableView>
+                                    <Label layoutX="511.0" layoutY="8.0" prefHeight="29.0" prefWidth="271.0" text="(Score being the number of matches of event criteria)">
+                                       <font>
+                                          <Font name="Berlin Sans FB" size="12.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </Pane>
                            </children>

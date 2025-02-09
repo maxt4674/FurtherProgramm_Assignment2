@@ -106,6 +106,8 @@ public class Staff {
 	//Auto-Match Feature
 	@FXML
 	private TableView<VenueMatch> venueMatchView;
+	@FXML 
+	private TableColumn<VenueMatch, String> venueNameACol, venueCategoryACol, venueCapacityACol, venueSuitableForACol, venueScoreACol;
 	@FXML
 	private MenuButton venueMatchMenu;
 	@FXML
@@ -389,19 +391,20 @@ public class Staff {
 		editBookingIDField.clear();
 	}
 	
-	public void btnAutoMatch() {
-		String event = venueMatchMenu.getText().toString();
+	public void btnAutoMatch(ActionEvent event) throws SQLException {
+		String eventName = venueMatchMenu.getText().toString();
 		
-		if(event.length() < 1 || event.equals("Event")) {
+		if(eventName.length() < 1 || eventName.equals("Event")) {
 			alertBookingLabel.setText("Please select an event to match!");
 		} else {
-			
+			DefaultMenu menuFunctions = new DefaultMenu();
+			populateVenueMatchTable(menuFunctions.returnAutoMatchScores(eventName));
 		}
 	}
 	
 	public void onClickAutoMatchVenueSelection(MouseEvent event) throws SQLException {
 		venueMatchMenu.getItems().clear();
-		ManagerMenu menuFunctions = new ManagerMenu();
+		DefaultMenu menuFunctions = new DefaultMenu();
 		ArrayList<String> events = menuFunctions.returnAllEventNames();
 		for(int i = 0; i < events.size(); i++) {
 			MenuItem item = new MenuItem(events.get(i));
@@ -411,6 +414,16 @@ public class Staff {
 			});
 			venueMatchMenu.getItems().add(item);
 		}
+	}
+	
+	public void onClickAutoMatchRow(MouseEvent event) throws SQLException {
+	    if (venueMatchView.getSelectionModel().getSelectedItem() != null) {
+	    	makeBookingEventField.setText(venueMatchMenu.getText());
+	    	makeBookingVenueField.setText(venueMatchView.getSelectionModel().getSelectedItem().venueNameProperty().get());
+	    	DefaultMenu menuFunctions = new DefaultMenu();
+	    	String eventDate = menuFunctions.getEventDate(venueMatchMenu.getText());
+	    	makeBookingDateField.setText(eventDate);
+	    }	
 	}
 	
 	//For initialising all default variables
@@ -510,5 +523,14 @@ public class Staff {
 		dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 		timeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
 		ordersView.setItems(orders);
+	}
+	
+	private void populateVenueMatchTable(ObservableList<VenueMatch> venueMatchs) {
+		venueNameACol.setCellValueFactory(new PropertyValueFactory<>("venueName"));
+		venueCategoryACol.setCellValueFactory(new PropertyValueFactory<>("category"));
+		venueCapacityACol.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+		venueSuitableForACol.setCellValueFactory(new PropertyValueFactory<>("suitableFor"));
+		venueScoreACol.setCellValueFactory(new PropertyValueFactory<>("score"));
+		venueMatchView.setItems(venueMatchs);
 	}
 }

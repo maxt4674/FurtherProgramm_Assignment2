@@ -67,7 +67,5 @@ public class ManagerMenu extends DefaultMenu {
 			return false;
 		}
 	}
-
-
 	
 }
