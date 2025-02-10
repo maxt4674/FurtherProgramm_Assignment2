@@ -123,7 +123,7 @@
                                        <children>
                                           <Pane layoutX="77.0" layoutY="-1.0" prefHeight="435.0" prefWidth="221.0">
                                              <children>
-                                                <Label fx:id="selectedVenueLabel" layoutX="22.0" prefHeight="29.0" prefWidth="170.0" text="Venue: *Selected Venue:*" underline="true">
+                                                <Label fx:id="selectedVenueLabel" layoutX="22.0" prefHeight="29.0" prefWidth="380.0" text="Venue: *Selected Venue:*" underline="true">
                                                    <font>
                                                       <Font name="Berlin Sans FB" size="14.0" />
                                                    </font>
@@ -351,11 +351,11 @@
                                     <Font name="Berlin Sans FB" size="18.0" />
                                  </font>
                               </Label>
-                              <TableView layoutX="14.0" layoutY="142.0" prefHeight="334.0" prefWidth="365.0">
+                              <TableView fx:id="orderStatsPerJobView" layoutX="14.0" layoutY="142.0" prefHeight="334.0" prefWidth="365.0">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="OrderNum" />
-                                    <TableColumn prefWidth="107.0" text="Event Name" />
-                                    <TableColumn prefWidth="182.0" text="Commission" />
+                                  <TableColumn fx:id="orderStatsIDCol" prefWidth="71.0" text="OrderNum" />
+                                    <TableColumn fx:id="orderStatsEventNameCol" prefWidth="194.0" text="Event Name" />
+                                    <TableColumn fx:id="orderStatsCommissionsCol" prefWidth="99.0" text="Commission" />
                                 </columns>
                               </TableView>
                               <Label layoutX="14.0" layoutY="106.0" prefHeight="29.0" prefWidth="158.0" text="Commission Per Job:">
@@ -363,10 +363,10 @@
                                     <Font name="Berlin Sans FB" size="14.0" />
                                  </font>
                               </Label>
-                              <TableView layoutX="420.0" layoutY="142.0" prefHeight="330.0" prefWidth="366.0">
+                              <TableView fx:id="clientOrdersView" layoutX="420.0" layoutY="142.0" prefHeight="330.0" prefWidth="366.0">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="Client" />
-                                    <TableColumn prefWidth="290.0" text="Total Commission" />
+                                    <TableColumn fx:id="clientOrdersClientNameCol" prefWidth="220.0" text="Client" />
+                                    <TableColumn fx:id="clientOrdersCommissionsCol" prefWidth="145.0" text="Total Commission" />
                                  </columns>
                               </TableView>
                               <Label layoutX="420.0" layoutY="106.0" prefHeight="29.0" prefWidth="158.0" text="Commission Per Client:">
@@ -374,7 +374,7 @@
                                     <Font name="Berlin Sans FB" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="420.0" layoutY="43.0" prefHeight="29.0" prefWidth="258.0" text="Total Commission Earnt: *****">
+                              <Label fx:id="totalCommissionsLabel" layoutX="420.0" layoutY="43.0" prefHeight="29.0" prefWidth="258.0" text="Total Commission Earnt: *****">
                                  <font>
                                     <Font name="Berlin Sans FB" size="18.0" />
                                  </font>

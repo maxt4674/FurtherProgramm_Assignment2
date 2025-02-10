@@ -50,7 +50,7 @@
                                        <children>
                                           <Pane layoutX="20.0" layoutY="-1.0" prefHeight="435.0" prefWidth="278.0">
                                              <children>
-                                                <Label fx:id="selectedEventLabel" layoutX="22.0" prefHeight="29.0" prefWidth="251.0" text="*Selected Event:*" underline="true">
+                                                <Label fx:id="selectedEventLabel" layoutX="22.0" prefHeight="29.0" prefWidth="261.0" text="*Selected Event:*" underline="true">
                                                    <font>
                                                       <Font name="Berlin Sans FB" size="14.0" />
                                                    </font>
@@ -119,7 +119,7 @@
                                        <children>
                                           <Pane layoutX="77.0" layoutY="-1.0" prefHeight="435.0" prefWidth="221.0">
                                              <children>
-                                                <Label fx:id="selectedVenueLabel" layoutX="22.0" prefHeight="29.0" prefWidth="163.0" text="*Selected Venue:*" underline="true">
+                                                <Label fx:id="selectedVenueLabel" layoutX="22.0" prefHeight="29.0" prefWidth="390.0" text="*Selected Venue:*" underline="true">
                                                    <font>
                                                       <Font name="Berlin Sans FB" size="14.0" />
                                                    </font>
@@ -406,22 +406,22 @@
                                     <Font name="Berlin Sans FB" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="usernameLabel" layoutX="99.0" layoutY="59.0" prefHeight="29.0" prefWidth="72.0" text="*Username* ">
+                              <Label fx:id="usernameLabel" layoutX="99.0" layoutY="59.0" prefHeight="29.0" prefWidth="136.0" text="*Username* ">
                                  <font>
                                     <Font name="Berlin Sans FB" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="passwordLabel" layoutX="99.0" layoutY="96.0" prefHeight="29.0" prefWidth="72.0" text="*Password* ">
+                              <Label fx:id="passwordLabel" layoutX="99.0" layoutY="96.0" prefHeight="29.0" prefWidth="125.0" text="*Password* ">
                                  <font>
                                     <Font name="Berlin Sans FB" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="firstNameLabel" layoutX="99.0" layoutY="131.0" prefHeight="29.0" prefWidth="86.0" text="*First Name* ">
+                              <Label fx:id="firstNameLabel" layoutX="99.0" layoutY="131.0" prefHeight="29.0" prefWidth="133.0" text="*First Name* ">
                                  <font>
                                     <Font name="Berlin Sans FB" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lastNameLabel" layoutX="99.0" layoutY="170.0" prefHeight="29.0" prefWidth="86.0" text="*Last Name* ">
+                              <Label fx:id="lastNameLabel" layoutX="99.0" layoutY="170.0" prefHeight="29.0" prefWidth="129.0" text="*Last Name* ">
                                  <font>
                                     <Font name="Berlin Sans FB" size="14.0" />
                                  </font>

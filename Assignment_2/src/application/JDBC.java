@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import application.masterData.clientData;
-import application.masterData.userData;
-import application.transactionData.bookingData;
-import application.transactionData.eventData;
-import application.transactionData.venuesData;
+import application.Objects.masterData.clientData;
+import application.Objects.masterData.userData;
+import application.Objects.transactionData.bookingData;
+import application.Objects.transactionData.eventData;
+import application.Objects.transactionData.venuesData;
 
 public class JDBC {
 	private Connection connection = null;
@@ -729,6 +729,19 @@ public class JDBC {
 		} catch (SQLException e) {
 			return false;
 		}
+	}
+
+	public ResultSet returnClientOrders() throws SQLException {
+		Statement stmt = connection.createStatement();
+		ResultSet result = stmt.executeQuery("SELECT Clients.ClientName, SUM((Venues.Booking_Price * Events.Duration)/10) FROM Clients INNER JOIN Events ON Events.ClientID = Clients.ClientID INNER JOIN Bookings ON Events.EventID = Bookings.EventID INNER JOIN Venues ON Bookings.VenueID = Venues.VenueID GROUP BY Clients.ClientName;");
+		return result;
+	}
+
+	public int numOfEventsByClient(String clientname) throws SQLException {
+		Statement stmt = connection.createStatement();
+		ResultSet result = stmt.executeQuery("SELECT COUNT(Bookings.BookingID) FROM Clients INNER JOIN Events ON Events.ClientID = Clients.ClientID INNER JOIN Bookings ON Bookings.EventID = Events.EventID WHERE ClientName = '"+clientname+"';");
+		int count = Integer.valueOf(result.getString(1));
+		return count;
 	}
 	
 }

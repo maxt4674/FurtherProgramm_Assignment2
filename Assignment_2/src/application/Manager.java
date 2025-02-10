@@ -7,9 +7,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import application.Objects.Booking;
+import application.Objects.ClientOrders;
+import application.Objects.Event;
+import application.Objects.ItemDetails;
+import application.Objects.Orders;
+import application.Objects.User;
+import application.Objects.Venue;
+import application.Objects.VenueMatch;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -130,6 +142,30 @@ public class Manager {
 	private TableView<Orders> ordersView;
 	@FXML
 	private TableColumn<Orders, String> orderIDCol, venueIDCol, eventIDCol, venueNameOCol, eventNameOCol, commissionsCol, clientCol, dateCol, timeCol; 
+	
+	//Order Statistics
+	@FXML
+	private TableView<Orders> orderStatsPerJobView;
+	@FXML
+	private TableColumn<Orders, String> orderStatsIDCol, orderStatsEventNameCol, orderStatsCommissionsCol;
+	
+	@FXML
+	private Label totalCommissionsLabel;
+	
+	@FXML
+	private TableView<ClientOrders> clientOrdersView;
+	@FXML
+	private TableColumn<ClientOrders, String> clientOrdersClientNameCol, clientOrdersCommissionsCol;
+	
+	//Report Tab
+	@FXML 
+	private PieChart venueUtilGraph;
+	@FXML
+	private CategoryAxis eventAxis;
+	@FXML
+	private NumberAxis incomeAxis;
+	@FXML
+	private BarChart<String, Number> incomeVsCommissionChart;
 	
 	
 	public void btnExit(ActionEvent event) {
@@ -373,6 +409,9 @@ public class Manager {
 				populateEventTable(menuFunctions.returnEvents());
 				populateBookingTable(menuFunctions.returnBookings());
 				populateOrderTable(menuFunctions.returnOrders());
+				populateOrderStatsPerJobView(menuFunctions.returnOrders());
+				populateTotalCommissionsLabel(menuFunctions.returnOrders());
+				populateClientCommissionsTable(menuFunctions.returnClientOrders());
 			} else {
 				alertBookingLabel.setText("Booking Unsuccessful!");
 			}
@@ -397,6 +436,9 @@ public class Manager {
 				populateEventTable(menuFunctions.returnEvents());
 				populateBookingTable(menuFunctions.returnBookings());
 				populateOrderTable(menuFunctions.returnOrders());
+				populateOrderStatsPerJobView(menuFunctions.returnOrders());
+				populateTotalCommissionsLabel(menuFunctions.returnOrders());
+				populateClientCommissionsTable(menuFunctions.returnClientOrders());
 			} else {
 				alertBookingLabel.setText("Booking not Deleted!");
 			}
@@ -449,6 +491,9 @@ public class Manager {
 					populateEventTable(menuFunctions.returnEvents());
 					populateBookingTable(menuFunctions.returnBookings());
 					populateOrderTable(menuFunctions.returnOrders());
+					populateOrderStatsPerJobView(menuFunctions.returnOrders());
+					populateTotalCommissionsLabel(menuFunctions.returnOrders());
+					populateClientCommissionsTable(menuFunctions.returnClientOrders());
 				} else {
 					alertBookingLabel.setText("Edit booking failed!");
 				}
@@ -522,6 +567,9 @@ public class Manager {
 		populateEventTable(menuFunctions.returnEvents());
 		populateBookingTable(menuFunctions.returnBookings());
 		populateOrderTable(menuFunctions.returnOrders());
+		populateOrderStatsPerJobView(menuFunctions.returnOrders());
+		populateTotalCommissionsLabel(menuFunctions.returnOrders());
+		populateClientCommissionsTable(menuFunctions.returnClientOrders());
 		
 		conn.closeConnectionToDB();
 	}
@@ -604,6 +652,28 @@ public class Manager {
 		venueSuitableForACol.setCellValueFactory(new PropertyValueFactory<>("suitableFor"));
 		venueScoreACol.setCellValueFactory(new PropertyValueFactory<>("score"));
 		venueMatchView.setItems(venueMatchs);
+	}
+	
+	private void populateOrderStatsPerJobView(ObservableList<Orders> orders) {
+		orderStatsIDCol.setCellValueFactory(new PropertyValueFactory<>("orderNum"));
+		orderStatsEventNameCol.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+		orderStatsCommissionsCol.setCellValueFactory(new PropertyValueFactory<>("commission"));
+		orderStatsPerJobView.setItems(orders);
+	}
+	
+	private void populateTotalCommissionsLabel(ObservableList<Orders> orders) {
+		int total = 0;
+		for(int i = 0; i < orders.size(); i++) {
+			total += Integer.valueOf(orders.get(i).commissionProperty().get());
+		}
+		
+		totalCommissionsLabel.setText("Total Commission Earnt: $" + total);
+	}
+	
+	private void populateClientCommissionsTable(ObservableList<ClientOrders> orders) {
+		clientOrdersClientNameCol.setCellValueFactory(new PropertyValueFactory<>("clientName"));
+		clientOrdersCommissionsCol.setCellValueFactory(new PropertyValueFactory<>("commissions"));
+		clientOrdersView.setItems(orders);
 	}
 
 }

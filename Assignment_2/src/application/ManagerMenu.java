@@ -5,11 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import application.masterData.clientData;
-import application.masterData.userData;
-import application.transactionData.venuesData;
-import application.transactionData.eventData;
-import application.transactionData.bookingData;
+import application.Objects.ClientOrders;
+import application.Objects.User;
+import application.Objects.masterData;
+import application.Objects.transactionData;
+import application.Objects.masterData.clientData;
+import application.Objects.masterData.userData;
+import application.Objects.transactionData.bookingData;
+import application.Objects.transactionData.eventData;
+import application.Objects.transactionData.venuesData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -179,6 +183,27 @@ public class ManagerMenu extends DefaultMenu {
 		} else {
 			return false;
 		}
+	}
+
+	public ObservableList<ClientOrders> returnClientOrders() throws SQLException {
+		ObservableList<ClientOrders> orders = FXCollections.observableArrayList();
+		JDBC conn = new JDBC();
+		conn.connectToDB();
+		ResultSet result = conn.returnClientOrders();
+		while(result.next()) {
+			if(conn.numOfEventsByClient(result.getString(1)) < 2){
+				ClientOrders order = new ClientOrders(result.getString(1), result.getString(2));
+				orders.add(order);
+			} else {
+				int editedCommission = Integer.valueOf(result.getString(2));
+				editedCommission = editedCommission - (editedCommission / 10);
+				ClientOrders order = new ClientOrders(result.getString(1), String.valueOf(editedCommission));
+				orders.add(order);
+			}
+
+		}
+		conn.closeConnectionToDB();
+		return orders;
 	}
 
 

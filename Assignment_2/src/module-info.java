@@ -6,4 +6,5 @@ module Assignment_2 {
 	requires javafx.graphics;
 	
 	opens application to javafx.graphics, javafx.fxml, javafx.base;
+	opens application.Objects to javafx.graphics, javafx.fxml, javafx.base;
 }

@@ -8,6 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import application.Objects.Booking;
+import application.Objects.Event;
+import application.Objects.ItemDetails;
+import application.Objects.Orders;
+import application.Objects.Venue;
+import application.Objects.VenueMatch;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

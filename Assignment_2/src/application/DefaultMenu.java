@@ -4,6 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.Objects.Booking;
+import application.Objects.Event;
+import application.Objects.ItemDetails;
+import application.Objects.Orders;
+import application.Objects.Venue;
+import application.Objects.VenueMatch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

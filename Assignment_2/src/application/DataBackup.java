@@ -3,6 +3,8 @@ package application;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import application.Objects.masterData;
+import application.Objects.transactionData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
