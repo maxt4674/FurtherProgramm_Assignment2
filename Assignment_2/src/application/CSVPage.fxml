@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CSV">
+   <top>
+      <Pane prefHeight="102.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="MainMenuBtn" layoutX="575.0" layoutY="63.0" mnemonicParsing="false" onAction="#btnMainMenu" prefHeight="25.0" prefWidth="191.0" text="Return To Menu" />
+            <Button fx:id="exitBtn" layoutX="689.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnExit" prefHeight="25.0" prefWidth="77.0" text="Exit" />
+            <Label layoutX="14.0" layoutY="12.0" prefHeight="29.0" prefWidth="87.0" text="LMVM">
+               <font>
+                  <Font name="Broadway" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="49.0" prefHeight="29.0" prefWidth="292.0" text="CSV Importer" underline="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </top>
+   <left>
+      <Pane prefHeight="386.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Separator layoutY="-2.0" prefHeight="4.0" prefWidth="800.0" />
+            <Label layoutX="12.0" layoutY="12.0" prefHeight="29.0" prefWidth="97.0" text="Import CSV" underline="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="18.0" />
+               </font>
+            </Label>
+            <Separator layoutX="397.0" orientation="VERTICAL" prefHeight="498.0" prefWidth="6.0" />
+            <Label layoutX="12.0" layoutY="65.0" prefHeight="29.0" prefWidth="97.0" text="Venue Data:">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="venuesFileNameField" layoutX="12.0" layoutY="94.0" prefHeight="25.0" prefWidth="223.0" promptText="Filename.csv" />
+            <Button fx:id="venuesImportBtn" layoutX="272.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnImportVenues" prefHeight="25.0" prefWidth="104.0" text="Import" />
+            <Label layoutX="12.0" layoutY="182.0" prefHeight="29.0" prefWidth="97.0" text="Request Data:">
+               <font>
+                  <Font name="Berlin Sans FB" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="requestsFileNameField" layoutX="12.0" layoutY="211.0" prefHeight="25.0" prefWidth="223.0" promptText="Filename.csv" />
+            <Button fx:id="requestsImportBtn" layoutX="272.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnImportRequests" prefHeight="25.0" prefWidth="104.0" text="Import" />
+            <Label fx:id="alertLabel" layoutX="30.0" layoutY="357.0" prefHeight="20.0" prefWidth="346.0" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </left>
+</BorderPane>
