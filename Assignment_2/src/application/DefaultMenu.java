@@ -450,6 +450,7 @@ public class DefaultMenu{
 				autoMatchList.add(newAuto);
 			}
 		}
+		
 		result = conn.returnAutoMatch(eventName, 3);
 		if(result != null) {
 			while(result.next()) {
@@ -457,6 +458,7 @@ public class DefaultMenu{
 				autoMatchList.add(newAuto);
 			}
 		}
+		
 		result = conn.returnAutoMatch(eventName, 4);
 		if(result != null) {
 			while(result.next()) {
@@ -464,6 +466,7 @@ public class DefaultMenu{
 				autoMatchList.add(newAuto);
 			}
 		}
+		
 		result = conn.returnAutoMatch(eventName, 5);
 		if(result != null) {
 			while(result.next()) {

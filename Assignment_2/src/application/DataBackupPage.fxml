@@ -51,13 +51,13 @@
                   <Font name="Berlin Sans FB" size="13.0" />
                </font>
             </Label>
-            <Button layoutX="282.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Import Backup" />
+            <Button fx:id="importTransactionBtn" layoutX="282.0" layoutY="95.0" mnemonicParsing="false" onAction="#btnImportTransaction" prefHeight="25.0" prefWidth="104.0" text="Import Backup" />
             <Label layoutX="412.0" layoutY="65.0" prefHeight="29.0" prefWidth="155.0" text="Backup Transaction Data" underline="true">
                <font>
                   <Font name="Berlin Sans FB" size="13.0" />
                </font>
             </Label>
-            <Button layoutX="672.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Backup" />
+            <Button fx:id="backupTransactionBtn" layoutX="672.0" layoutY="95.0" mnemonicParsing="false" onAction="#btnBackupTransaction" prefHeight="25.0" prefWidth="107.0" text="Backup" />
             <Label layoutX="412.0" layoutY="209.0" prefHeight="29.0" prefWidth="155.0" text="Backup Master Data" underline="true">
                <font>
                   <Font name="Berlin Sans FB" size="13.0" />
@@ -68,7 +68,7 @@
                   <Font name="Berlin Sans FB" size="13.0" />
                </font>
             </Label>
-            <Button layoutX="282.0" layoutY="250.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Import Backup" />
+            <Button fx:id="importMasterBtn" layoutX="282.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnImportMaster" prefHeight="25.0" prefWidth="104.0" text="Import Backup" />
             <Label layoutX="413.0" layoutY="93.0" prefHeight="29.0" prefWidth="233.0" text="- Backups orders, venues and requests">
                <font>
                   <Font name="Berlin Sans FB" size="13.0" />
@@ -79,7 +79,7 @@
                   <Font name="Berlin Sans FB" size="13.0" />
                </font>
             </Label>
-            <Button layoutX="672.0" layoutY="250.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Backup" />
+            <Button fx:id="backupMasterBtn" layoutX="672.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnBackupMaster" prefHeight="25.0" prefWidth="107.0" text="Backup" />
             <Label layoutX="14.0" layoutY="248.0" prefHeight="29.0" prefWidth="233.0" text="- Imports users and clients">
                <font>
                   <Font name="Berlin Sans FB" size="13.0" />
@@ -90,6 +90,8 @@
                   <Font name="Berlin Sans FB" size="13.0" />
                </font>
             </Label>
+            <Label fx:id="alertLabelImport" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="467.0" prefHeight="17.0" prefWidth="374.0" textFill="RED" />
+            <Label fx:id="alertLabelbackup" alignment="CENTER" contentDisplay="CENTER" layoutX="412.0" layoutY="459.0" prefHeight="17.0" prefWidth="374.0" textFill="RED" />
          </children>
       </Pane>
    </left>

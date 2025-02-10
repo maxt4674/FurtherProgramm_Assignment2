@@ -7,6 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import application.masterData.clientData;
+import application.masterData.userData;
+import application.transactionData.bookingData;
+import application.transactionData.eventData;
+import application.transactionData.venuesData;
+
 public class JDBC {
 	private Connection connection = null;
 	
@@ -521,7 +527,7 @@ public class JDBC {
 				}
 			}
 			
-			if(locations.size() > 1) {
+			if(locations.size() > 0) {
 				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
 				for(int i = 0; i < locations.size(); i++) {
 					query += allVenues.get(locations.get(i));
@@ -542,7 +548,7 @@ public class JDBC {
 				}
 			}
 			
-			if(locations.size() > 1) {
+			if(locations.size() > 0) {
 				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
 				for(int i = 0; i < locations.size(); i++) {
 					query += allVenues.get(locations.get(i));
@@ -563,7 +569,7 @@ public class JDBC {
 				}
 			}
 			
-			if(locations.size() > 1) {
+			if(locations.size() > 0) {
 				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
 				for(int i = 0; i < locations.size(); i++) {
 					query += allVenues.get(locations.get(i));
@@ -584,7 +590,7 @@ public class JDBC {
 				}
 			}
 			
-			if(locations.size() > 1) {
+			if(locations.size() > 0) {
 				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
 				for(int i = 0; i < locations.size(); i++) {
 					query += allVenues.get(locations.get(i));
@@ -605,7 +611,7 @@ public class JDBC {
 				}
 			}
 			
-			if(locations.size() > 1) {
+			if(locations.size() > 0) {
 				String query = "SELECT Name, Category, Capacity, Suitable_For FROM Venues WHERE VenueID IN (";
 				for(int i = 0; i < locations.size(); i++) {
 					query += allVenues.get(locations.get(i));
@@ -630,5 +636,99 @@ public class JDBC {
 		return date;
 	}
 
+	public ResultSet returnAllUsers() throws SQLException {
+		Statement conn = connection.createStatement();
+		ResultSet result = conn.executeQuery("SELECT * FROM Users;");
+		return result;
+	}
 
+	public ResultSet returnAllClients() throws SQLException {
+		Statement conn = connection.createStatement();
+		ResultSet result = conn.executeQuery("SELECT * FROM Clients;");
+		return result;
+	}
+
+	public ResultSet returnAllVenues() throws SQLException {
+		Statement conn = connection.createStatement();
+		ResultSet result = conn.executeQuery("SELECT * FROM Venues;");
+		return result;
+	}
+
+	public ResultSet returnAllEvents() throws SQLException {
+		Statement conn = connection.createStatement();
+		ResultSet result = conn.executeQuery("SELECT * FROM Events;");
+		return result;
+	}
+
+	public ResultSet returnAllBookings() throws SQLException {
+		Statement conn = connection.createStatement();
+		ResultSet result = conn.executeQuery("SELECT * FROM Bookings;");
+		return result;
+	}
+
+	public boolean importUsersData(ArrayList<userData> users) {
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.execute("DELETE FROM Users;");
+			for(int i = 0; i < users.size(); i++) {
+				stmt.execute("INSERT INTO Users (userID, username, firstName, lastName, password, IsManager) Values ('" + users.get(i).getUserID() + "', '" + users.get(i).getUsername() + "', '" + users.get(i).getFirstName() + "', '" + users.get(i).getLastName() + "', '" + users.get(i).getPassword() + "', '" + users.get(i).getIsManager() + "');");
+			}
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+
+	public boolean importClientsData(ArrayList<clientData> clients) {
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.execute("DELETE FROM Clients;");
+			for(int i = 0; i < clients.size(); i++) {
+				stmt.execute("INSERT INTO Clients (ClientID, ClientName) VALUES ('" + clients.get(i).getClientID() + "','" + clients.get(i).getClientName() + "');");
+			}
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+
+	public boolean importVenuesData(ArrayList<venuesData> venues) {
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.execute("DELETE FROM Venues;");
+			for(int i = 0; i < venues.size(); i++) {
+				stmt.execute("INSERT INTO Venues (VenueID, Name, Capacity, Suitable_For, Category, Booking_Price) VALUES ('" + venues.get(i).getVenueID() + "','" + venues.get(i).getName() + "','" + venues.get(i).getCapacity() + "','"+venues.get(i).getSuitable_For()+"','"+venues.get(i).getCategory()+"','"+venues.get(i).getBooking_Price()+"');");
+			}
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+
+	public boolean importEventsData(ArrayList<eventData> events) {
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.execute("DELETE FROM Events;");
+			for(int i = 0; i < events.size(); i++) {
+				stmt.execute("INSERT INTO Events (EventID, Title, Artist, Date, Time, Duration, Target_Audience, Type, Category, ClientID, BookingID) VALUES ('"+events.get(i).getEventID()+"','"+events.get(i).getTitle()+"','"+events.get(i).getArtist()+"','"+events.get(i).getDate()+"','"+events.get(i).getTime()+"','"+events.get(i).getDuration()+"','"+events.get(i).getTarget_Audience()+"','"+events.get(i).getType()+"','"+events.get(i).getCategory()+"','"+events.get(i).getClientID()+"','"+events.get(i).getBookingID()+"');");
+			}
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+
+	public boolean importBookingsData(ArrayList<bookingData> bookings) {
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.execute("DELETE FROM Bookings;");
+			for(int i = 0; i < bookings.size(); i++) {
+				stmt.execute("INSERT INTO Bookings (BookingID, Date, Time, VenueID, EventID) VALUES ('"+bookings.get(i).getBookingID()+"','"+bookings.get(i).getDate()+"','"+bookings.get(i).getTime()+"','"+bookings.get(i).getVenueID()+"','"+bookings.get(i).getEventID()+"');");
+			}
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+	
 }
