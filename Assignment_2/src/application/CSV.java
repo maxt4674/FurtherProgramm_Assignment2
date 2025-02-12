@@ -76,7 +76,9 @@ public class CSV {
 						ArrayList<String> row = new ArrayList<String>();
 						
 						for(int i = 0; i < seperatedData.length; i++) {
-							row.add(seperatedData[i]);
+							String input = seperatedData[i].trim();
+							input = input.toLowerCase();
+							row.add(input);
 						}
 						
 						requestData.add(row);
@@ -125,7 +127,9 @@ public class CSV {
 						ArrayList<String> row = new ArrayList<String>();
 						
 						for(int i = 0; i < seperatedData.length; i++) {
-							row.add(seperatedData[i]);
+							String input = seperatedData[i].trim();
+							input = input.toLowerCase();
+							row.add(input);
 						}
 						
 						venueData.add(row);
