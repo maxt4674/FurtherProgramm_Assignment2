@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import application.Objects.masterData.clientData;
-import application.Objects.masterData.userData;
-import application.Objects.transactionData.bookingData;
-import application.Objects.transactionData.eventData;
-import application.Objects.transactionData.venuesData;
+import application.masterData.clientData;
+import application.masterData.userData;
+import application.transactionData.bookingData;
+import application.transactionData.eventData;
+import application.transactionData.venuesData;
 
 public class JDBC {
 	private Connection connection = null;
@@ -742,6 +742,25 @@ public class JDBC {
 		ResultSet result = stmt.executeQuery("SELECT COUNT(Bookings.BookingID) FROM Clients INNER JOIN Events ON Events.ClientID = Clients.ClientID INNER JOIN Bookings ON Bookings.EventID = Events.EventID WHERE ClientName = '"+clientname+"';");
 		int count = Integer.valueOf(result.getString(1));
 		return count;
+	}
+
+	public ResultSet returnPieGraphData() throws SQLException {
+		Statement stmt = connection.createStatement();
+		ResultSet result = stmt.executeQuery("SELECT Venues.Name, COUNT(Bookings.BookingID) FROM Venues LEFT JOIN Bookings ON Bookings.VenueID = Venues.VenueID GROUP BY Venues.Name;");
+		return result;
+	}
+
+	public ResultSet returnBarChartData() throws SQLException {
+		Statement stmt = connection.createStatement();
+		ResultSet result = stmt.executeQuery("SELECT Events.Title, (Venues.Booking_Price * Events.Duration)/10, (Events.Duration * Venues.Booking_Price) FROM Bookings INNER JOIN Events ON Events.EventID = Bookings.EventID INNER JOIN Venues ON Venues.VenueID = Bookings.VenueID;");
+		return result;
+	}
+
+	public String returnClientByEvent(String eventName) throws SQLException {
+		Statement stmt = connection.createStatement();
+		ResultSet result = stmt.executeQuery("SELECT ClientName FROM Clients INNER JOIN Events ON Events.ClientID = Clients.ClientID WHERE Events.Title = '"+eventName+"';");
+		String clientName = result.getString(1);
+		return clientName;
 	}
 	
 }

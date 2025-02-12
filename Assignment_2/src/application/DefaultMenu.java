@@ -202,7 +202,7 @@ public class DefaultMenu{
 		ResultSet results = conn.returnEvents();
 		while(results.next()) {
 			String hasBooking = "No";
-			if(results.getString(10) != null) {
+			if(results.getString(10) != null && !results.getString(10).equals("null")) {
 				hasBooking = "Yes";
 			}
 			Event newEvent = new Event(results.getString(1), results.getString(2), results.getString(3), results.getString(4), results.getString(5), results.getString(6), results.getString(7), results.getString(8), results.getString(9), hasBooking, results.getString(11));

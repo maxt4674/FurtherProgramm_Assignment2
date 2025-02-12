@@ -5,15 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.Objects.ChartData;
 import application.Objects.ClientOrders;
+import application.Objects.PieGraphData;
 import application.Objects.User;
-import application.Objects.masterData;
-import application.Objects.transactionData;
-import application.Objects.masterData.clientData;
-import application.Objects.masterData.userData;
-import application.Objects.transactionData.bookingData;
-import application.Objects.transactionData.eventData;
-import application.Objects.transactionData.venuesData;
+import application.masterData.clientData;
+import application.masterData.userData;
+import application.transactionData.bookingData;
+import application.transactionData.eventData;
+import application.transactionData.venuesData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -204,6 +204,39 @@ public class ManagerMenu extends DefaultMenu {
 		}
 		conn.closeConnectionToDB();
 		return orders;
+	}
+
+	public ObservableList<PieGraphData> returnPieGraphData() throws SQLException {
+		ObservableList<PieGraphData> data = FXCollections.observableArrayList();
+		JDBC conn = new JDBC();
+		conn.connectToDB();
+		ResultSet result = conn.returnPieGraphData();
+		while(result.next()) {
+			PieGraphData pie = new PieGraphData(result.getString(1), result.getInt(2));
+			data.add(pie);
+		}
+		conn.closeConnectionToDB();
+		return data;
+	}
+
+	public ObservableList<ChartData> returnChartData() throws SQLException {
+		ObservableList<ChartData> data = FXCollections.observableArrayList();
+		JDBC conn = new JDBC();
+		conn.connectToDB();
+		ResultSet result = conn.returnBarChartData();
+		while(result.next()) {
+			if(conn.numOfEventsByClient(conn.returnClientByEvent(result.getString(1))) < 2) {
+				ChartData chart = new ChartData(result.getString(1), result.getInt(2), result.getInt(3));
+				data.add(chart);
+			} else {
+				int editedCommission = Integer.valueOf(result.getString(2));
+				editedCommission = editedCommission - (editedCommission / 10);
+				ChartData chart = new ChartData(result.getString(1), editedCommission, result.getInt(3));
+				data.add(chart);
+			}
+		}
+		conn.closeConnectionToDB();
+		return data;
 	}
 
 

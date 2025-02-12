@@ -8,13 +8,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import application.Objects.Booking;
+import application.Objects.ChartData;
 import application.Objects.ClientOrders;
 import application.Objects.Event;
 import application.Objects.ItemDetails;
 import application.Objects.Orders;
+import application.Objects.PieGraphData;
 import application.Objects.User;
 import application.Objects.Venue;
 import application.Objects.VenueMatch;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +25,8 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -412,6 +417,8 @@ public class Manager {
 				populateOrderStatsPerJobView(menuFunctions.returnOrders());
 				populateTotalCommissionsLabel(menuFunctions.returnOrders());
 				populateClientCommissionsTable(menuFunctions.returnClientOrders());
+				populatePieGraph(menuFunctions.returnPieGraphData());
+				populateBarChart(menuFunctions.returnChartData());
 			} else {
 				alertBookingLabel.setText("Booking Unsuccessful!");
 			}
@@ -439,6 +446,8 @@ public class Manager {
 				populateOrderStatsPerJobView(menuFunctions.returnOrders());
 				populateTotalCommissionsLabel(menuFunctions.returnOrders());
 				populateClientCommissionsTable(menuFunctions.returnClientOrders());
+				populatePieGraph(menuFunctions.returnPieGraphData());
+				populateBarChart(menuFunctions.returnChartData());
 			} else {
 				alertBookingLabel.setText("Booking not Deleted!");
 			}
@@ -494,6 +503,8 @@ public class Manager {
 					populateOrderStatsPerJobView(menuFunctions.returnOrders());
 					populateTotalCommissionsLabel(menuFunctions.returnOrders());
 					populateClientCommissionsTable(menuFunctions.returnClientOrders());
+					populatePieGraph(menuFunctions.returnPieGraphData());
+					populateBarChart(menuFunctions.returnChartData());
 				} else {
 					alertBookingLabel.setText("Edit booking failed!");
 				}
@@ -570,6 +581,8 @@ public class Manager {
 		populateOrderStatsPerJobView(menuFunctions.returnOrders());
 		populateTotalCommissionsLabel(menuFunctions.returnOrders());
 		populateClientCommissionsTable(menuFunctions.returnClientOrders());
+		populatePieGraph(menuFunctions.returnPieGraphData());
+		populateBarChart(menuFunctions.returnChartData());
 		
 		conn.closeConnectionToDB();
 	}
@@ -674,6 +687,30 @@ public class Manager {
 		clientOrdersClientNameCol.setCellValueFactory(new PropertyValueFactory<>("clientName"));
 		clientOrdersCommissionsCol.setCellValueFactory(new PropertyValueFactory<>("commissions"));
 		clientOrdersView.setItems(orders);
+	}
+	
+	private void populatePieGraph(ObservableList<PieGraphData> data) {
+		ObservableList<Data> pieData = FXCollections.observableArrayList();
+		for(int i = 0; i < data.size(); i++) {
+			Data dataSingular = new Data(data.get(i).VenueProperty().get(), data.get(i).NumBookingsProperty());
+			pieData.add(dataSingular);
+		}
+		
+		venueUtilGraph.setData(pieData);
+		venueUtilGraph.setLabelsVisible(false);
+	}
+	
+	private void populateBarChart(ObservableList<ChartData> data) {
+		incomeVsCommissionChart.getData().clear();
+		ObservableList<XYChart.Series<String, Number>> series = FXCollections.observableArrayList();
+		for(int i = 0; i < data.size(); i++) {
+			XYChart.Series<String, Number> seriesInput = new XYChart.Series<>(); 
+			seriesInput.setName(data.get(i).eventNameProperty().get());
+			seriesInput.getData().add(new XYChart.Data<>("commission", data.get(i).commissionProperty()));
+			seriesInput.getData().add(new XYChart.Data<>("income", data.get(i).incomeProperty()));
+			series.add(seriesInput);
+		}
+		incomeVsCommissionChart.getData().addAll(series);
 	}
 
 }
