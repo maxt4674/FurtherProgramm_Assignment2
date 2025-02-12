@@ -13,7 +13,9 @@ import application.Objects.VenueMatch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+//Default Class for functions in use by both manager and staff
 public class DefaultMenu{
+	//Function for editing user account
 	public boolean editAccount(String userID, String username, String password, String firstName, String lastName, boolean isManager) throws NumberFormatException, SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -86,6 +88,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns user id based on a username
 	public String getID(String username) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -95,6 +98,7 @@ public class DefaultMenu{
 		return resultStr;
 	}
 	
+	//Returns if a string is numeric
 	public boolean isNumeric(String value) {
 		try {
 			Integer.valueOf(value);
@@ -104,6 +108,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns if the date is valid and in format(dd-mm-yy) 
 	public boolean isValidDate(String date) {
 		String[] dateSplit = date.split("-");
 		if(dateSplit.length < 3 || dateSplit.length > 3) {
@@ -119,6 +124,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns if both venue and event are present in the db
 	public boolean isValidVenueAndEvent(String venue, String event) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -131,6 +137,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns all venues based on category and/or name
 	public ObservableList<Venue> returnVenues(String category, String name) throws SQLException {
 		ObservableList<Venue> venues = FXCollections.observableArrayList();
 		JDBC conn = new JDBC();
@@ -159,6 +166,7 @@ public class DefaultMenu{
 		return venues;
 	}
 	
+	//Returns all categories of venues present in the db
 	public ArrayList<String> returnVenueCategories() throws SQLException{
 		ArrayList<String> categories = new ArrayList<String>();
 		JDBC conn = new JDBC();
@@ -172,6 +180,7 @@ public class DefaultMenu{
 		return categories;
 	}
 	
+	//returns all the details of a venue based on the venueName
 	public ObservableList<ItemDetails> returnVenueDetailed(String venueName) throws SQLException {
 		ObservableList<ItemDetails> venueDetails = FXCollections.observableArrayList();
 		ArrayList<String> listOfItems = new ArrayList<String>();
@@ -194,6 +203,7 @@ public class DefaultMenu{
 		return venueDetails;
 	}
 	
+	//Returns all events
 	public ObservableList<Event> returnEvents() throws SQLException{
 		ObservableList<Event> events = FXCollections.observableArrayList();
 		
@@ -213,6 +223,7 @@ public class DefaultMenu{
 		return events;
 	}
 	
+	//Returns events details based on the eventname input
 	public ObservableList<ItemDetails> returnEventDetailed(String eventName) throws SQLException {
 		ObservableList<ItemDetails> venueDetails = FXCollections.observableArrayList();
 		ArrayList<String> listOfItems = new ArrayList<String>();
@@ -239,6 +250,7 @@ public class DefaultMenu{
 		return venueDetails;
 	}
 
+	//Returns all bookings
 	public ObservableList<Booking> returnBookings() throws SQLException {
 		ObservableList<Booking> bookings = FXCollections.observableArrayList();
 		
@@ -254,6 +266,7 @@ public class DefaultMenu{
 		return bookings;
 	}
 	
+	//Returns a list of times available based on the date, venue and event(duration)
 	public ArrayList<String> returnAvailableTimes(String venueName, String eventName, String eventDate) throws SQLException {
 		ArrayList<String> availableTimes = new ArrayList<String>();
 		ArrayList<Integer> availableTimeBinary = new ArrayList<Integer>();
@@ -309,6 +322,7 @@ public class DefaultMenu{
 		return availableTimesFinal;
 	}
 	
+	//Makes a booking and returns if this was successful or not
 	public boolean makeBooking(String venueName, String eventName, String eventDate, String bookingTime) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -321,6 +335,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns if the named event is already booked or not
 	public boolean eventBooked(String eventName) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -333,6 +348,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns id the booking id is present in the db
 	public boolean isValidBookingID(String id) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -345,6 +361,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//deletes a booking based on the id
 	public boolean deleteBooking(String id) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -357,6 +374,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns if the venue exists or not
 	public boolean isValidVenue(String venue) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -369,6 +387,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns if the event exists or not
 	public boolean isValidEvent(String event) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -381,6 +400,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns all variables of booking based on its id
 	public ArrayList<String> returnBookingOnID(String id) throws SQLException{
 		ArrayList<String> returnVals = new ArrayList<String>();
 		JDBC conn = new JDBC();
@@ -395,6 +415,7 @@ public class DefaultMenu{
 		return returnVals;
 	}
 	
+	//edits a booking and returns if this was successful or not
 	public boolean eventBookedEdit(String eventName, String bookingID) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -408,6 +429,7 @@ public class DefaultMenu{
 		}
 	}
 	
+	//Returns the names of all events
 	public ArrayList<String> returnAllEventNames() throws SQLException {
 		ArrayList<String> events = new ArrayList<String>();
 		
@@ -421,6 +443,7 @@ public class DefaultMenu{
 		return events;
 	}
 
+	//Returns all orders in the db
 	public ObservableList<Orders> returnOrders() throws SQLException {
 		ObservableList<Orders> Orders = FXCollections.observableArrayList();
 		
@@ -437,6 +460,7 @@ public class DefaultMenu{
 		return Orders;
 	}
 	
+	//Returns the venues and accompanying auto match scores
 	public ObservableList<VenueMatch> returnAutoMatchScores(String eventName) throws SQLException {
 		ObservableList<VenueMatch> autoMatchList = FXCollections.observableArrayList();
 		JDBC conn = new JDBC();
@@ -484,6 +508,7 @@ public class DefaultMenu{
 		return autoMatchList;
 	}
 	
+	//Returns the date of an event based on its eventName
 	public String getEventDate(String eventName) throws SQLException {
 		String eventDate = "";
 		JDBC conn = new JDBC();

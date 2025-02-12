@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//Class for parsing and creating objects of the transaction data
 public class transactionData {
 	@SuppressWarnings("serial")
 	public static class venuesData implements Serializable{
@@ -165,6 +166,7 @@ public class transactionData {
 		}
 	}
 	
+	//backs up data
 	public boolean backupData(ArrayList<venuesData> venues, ArrayList<eventData> events, ArrayList<bookingData> bookings) {
 		File dataFile = new File("src/Backups/transactiondata.lmvm");
 	    try(FileOutputStream fos = new FileOutputStream(dataFile); ObjectOutputStream oos = new ObjectOutputStream(fos);){
@@ -181,6 +183,7 @@ public class transactionData {
 	    }
 	}
 	
+	//imports backup
 	@SuppressWarnings("unchecked")
 	public boolean importBackupData() throws ClassNotFoundException, SQLException {
 		ArrayList<venuesData> venues = new ArrayList<venuesData>();

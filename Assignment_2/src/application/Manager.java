@@ -172,22 +172,25 @@ public class Manager {
 	@FXML
 	private BarChart<String, Number> incomeVsCommissionChart;
 	
-	
+	//Exit btn
 	public void btnExit(ActionEvent event) {
 		Stage stage = (Stage) exitBtn.getScene().getWindow();
 		stage.close();
 	}
 	
+	//CSV page btn
 	public void btnCSVFiles(ActionEvent event) throws IOException {
 		Main main = new Main();
 		main.changeScene("CSVPage.fxml");
 	}
 	
+	//Backup page btn
 	public void btnDataBackUp(ActionEvent event) throws IOException {
 		Main main = new Main();
 		main.changeScene("DataBackupPage.fxml");
 	}
 	
+	//Add user btn
 	public void btnAddAccount(ActionEvent event) throws SQLException {
 		String username = addAccountUsernameField.getText().toString();
 		String password = addAccountPasswordField.getText().toString();
@@ -223,6 +226,7 @@ public class Manager {
 		
 	}
 	
+	//Delete user btn
 	public void btnDeleteAccount(ActionEvent event) throws SQLException {
 		String userIDtoDel = deleteAccountField.getText().toString();
 		boolean wasSuccessful = false;
@@ -242,6 +246,7 @@ public class Manager {
 		deleteAccountField.clear();
 	}
 	
+	//On click in the venue table to display venue details
 	public void onClickVenueRow(MouseEvent event) throws SQLException {
 	    if (venueViewMain.getSelectionModel().getSelectedItem() != null) {
 	        String venueName = venueViewMain.getSelectionModel().getSelectedItem().NameProperty().get();
@@ -251,6 +256,7 @@ public class Manager {
 	    }
 	}
 	
+	//Search for venue btn
 	public void btnSearchVenue(ActionEvent event) throws SQLException {
 		String nameSearch = venueNameField.getText().toString();
 		String category = venueCategoryMenu.getText().toString();
@@ -270,6 +276,7 @@ public class Manager {
 		venueCategoryMenu.setText("Category");
 	}
 	
+	//Edit account btn
 	public void btnEditAccount(ActionEvent event) throws SQLException{
 		String userIDtoEdit = editAccountUserIDField.getText().toString();
 		String username = editAccountUsernameField.getText().toString();
@@ -316,6 +323,7 @@ public class Manager {
 		editAccountLastNameField.clear();
 	}
 	
+	//on click on the events table to reveal event details
 	public void onClickEventRow(MouseEvent event) throws SQLException {
 	    if (eventViewMain.getSelectionModel().getSelectedItem() != null) {
 	        String eventName = eventViewMain.getSelectionModel().getSelectedItem().TitleProperty().get();
@@ -325,6 +333,7 @@ public class Manager {
 	    }	
 	}
 	
+	//MenuButton on click to return available times for booking
 	public void onClickMakeBookingTimeSelection(MouseEvent event) throws SQLException {
 		makeBookingTimeMenu.getItems().clear();
 		String venueName = makeBookingVenueField.getText().toString();
@@ -353,6 +362,7 @@ public class Manager {
 		}
 	}
 	
+	//MenuButton on click to return available times for editing a booking
 	public void onClickEditBookingTimeSelection(MouseEvent event) throws SQLException {
 		editBookingTimeMenu.getItems().clear();
 		String bookingID = editBookingIDField.getText().toString();
@@ -394,6 +404,7 @@ public class Manager {
 		}
 	}
 	
+	//Make booking btn
 	public void btnMakeBooking(ActionEvent event) throws SQLException {
 		String venueName = makeBookingVenueField.getText().toString();
 		String eventName = makeBookingEventField.getText().toString();
@@ -430,6 +441,7 @@ public class Manager {
 		makeBookingTimeMenu.setText("Times Available");
 	}
 	
+	//Delete a booking btn
 	public void btnDeleteBooking(ActionEvent event) throws SQLException {
 		String bookingID = delBookingIDField.getText().toString();
 		ManagerMenu menuFunctions = new ManagerMenu();
@@ -456,6 +468,7 @@ public class Manager {
 		delBookingIDField.clear();
 	}
 	
+	//Edit booking btn
 	public void btnEditBooking(ActionEvent event) throws SQLException {
 		String bookingID = editBookingIDField.getText().toString();
 		String venueName = editBookingVenueField.getText().toString();
@@ -520,6 +533,7 @@ public class Manager {
 		editBookingIDField.clear();
 	}
 	
+	//Auto match venue to eventName btn
 	public void btnAutoMatch(ActionEvent event) throws SQLException {
 		String eventName = venueMatchMenu.getText().toString();
 		
@@ -531,6 +545,7 @@ public class Manager {
 		}
 	}
 	
+	//Returns list of events to select from
 	public void onClickAutoMatchVenueSelection(MouseEvent event) throws SQLException {
 		venueMatchMenu.getItems().clear();
 		ManagerMenu menuFunctions = new ManagerMenu();
@@ -545,6 +560,7 @@ public class Manager {
 		}
 	}
 	
+	//On click on automatch table row to fill in the make booking fields
 	public void onClickAutoMatchRow(MouseEvent event) throws SQLException {
 	    if (venueMatchView.getSelectionModel().getSelectedItem() != null) {
 	    	makeBookingEventField.setText(venueMatchMenu.getText());
@@ -587,6 +603,7 @@ public class Manager {
 		conn.closeConnectionToDB();
 	}
 	
+	//Populate user table
 	private void populateUserTable(ObservableList<User> users) {
 		userIDCol.setCellValueFactory(new PropertyValueFactory<>("UserID"));
 		usernameCol.setCellValueFactory(new PropertyValueFactory<>("Username"));
@@ -596,12 +613,14 @@ public class Manager {
 		userView.setItems(users);
 	}
 	
+	//populates venue table
 	private void populateVenueTable(ObservableList<Venue> venues) {
 		venueNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
 		venueCategoryCol.setCellValueFactory(new PropertyValueFactory<>("Category"));
 		venueViewMain.setItems(venues);
 	}
 	
+	//populates venue catgeory menu
 	private void populateVenueCategoryMenu(ArrayList<String> categories) {
 		venueCategoryMenu.getItems().clear();
 		for(int i = 0; i < categories.size(); i++) {
@@ -614,12 +633,14 @@ public class Manager {
 		}
 	}
 	
+	//populates venue detailed table
 	private void populateVenueViewDetailed(ObservableList<ItemDetails> venueDetails) {
 		venueItemCol.setCellValueFactory(new PropertyValueFactory<>("Item"));
 		venueInfoCol.setCellValueFactory(new PropertyValueFactory<>("Info"));
 		venueViewDetailed.setItems(venueDetails);
 	}
 	
+	//populate event table
 	private void populateEventTable(ObservableList<Event> events) {
 		eventNameCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
 		eventArtistCol.setCellValueFactory(new PropertyValueFactory<>("Artist"));
@@ -629,12 +650,14 @@ public class Manager {
 		eventViewMain.setItems(events);
 	}
 	
+	//populate event detailed table
 	private void populateEventViewDetailed(ObservableList<ItemDetails> eventDetails) {
 		eventItemCol.setCellValueFactory(new PropertyValueFactory<>("Item"));
 		eventInfoCol.setCellValueFactory(new PropertyValueFactory<>("Info"));
 		eventViewDetailed.setItems(eventDetails);
 	}
 	
+	//populate bookings
 	private void populateBookingTable(ObservableList<Booking> bookings) {
 		bookingIDCol.setCellValueFactory(new PropertyValueFactory<>("BookingID"));
 		bookingEventCol.setCellValueFactory(new PropertyValueFactory<>("Event"));
@@ -645,6 +668,7 @@ public class Manager {
 		bookingView.setItems(bookings);
 	}
 	
+	//populate order table
 	private void populateOrderTable(ObservableList<Orders> orders) {
 		orderIDCol.setCellValueFactory(new PropertyValueFactory<>("orderNum"));
 		venueIDCol.setCellValueFactory(new PropertyValueFactory<>("venueNum"));
@@ -658,6 +682,7 @@ public class Manager {
 		ordersView.setItems(orders);
 	}
 	
+	//populate venue match table
 	private void populateVenueMatchTable(ObservableList<VenueMatch> venueMatchs) {
 		venueNameACol.setCellValueFactory(new PropertyValueFactory<>("venueName"));
 		venueCategoryACol.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -667,6 +692,7 @@ public class Manager {
 		venueMatchView.setItems(venueMatchs);
 	}
 	
+	//Orders stats per job table
 	private void populateOrderStatsPerJobView(ObservableList<Orders> orders) {
 		orderStatsIDCol.setCellValueFactory(new PropertyValueFactory<>("orderNum"));
 		orderStatsEventNameCol.setCellValueFactory(new PropertyValueFactory<>("eventName"));
@@ -674,6 +700,7 @@ public class Manager {
 		orderStatsPerJobView.setItems(orders);
 	}
 	
+	//Total commissions label
 	private void populateTotalCommissionsLabel(ObservableList<Orders> orders) {
 		int total = 0;
 		for(int i = 0; i < orders.size(); i++) {
@@ -683,12 +710,14 @@ public class Manager {
 		totalCommissionsLabel.setText("Total Commission Earnt: $" + total);
 	}
 	
+	//Client and commissions table
 	private void populateClientCommissionsTable(ObservableList<ClientOrders> orders) {
 		clientOrdersClientNameCol.setCellValueFactory(new PropertyValueFactory<>("clientName"));
 		clientOrdersCommissionsCol.setCellValueFactory(new PropertyValueFactory<>("commissions"));
 		clientOrdersView.setItems(orders);
 	}
 	
+	//Pie graph
 	private void populatePieGraph(ObservableList<PieGraphData> data) {
 		ObservableList<Data> pieData = FXCollections.observableArrayList();
 		for(int i = 0; i < data.size(); i++) {
@@ -700,6 +729,7 @@ public class Manager {
 		venueUtilGraph.setLabelsVisible(false);
 	}
 	
+	//Bar chart
 	private void populateBarChart(ObservableList<ChartData> data) {
 		incomeVsCommissionChart.getData().clear();
 		ObservableList<XYChart.Series<String, Number>> series = FXCollections.observableArrayList();

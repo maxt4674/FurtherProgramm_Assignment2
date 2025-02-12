@@ -125,21 +125,19 @@ public class Staff {
 	@FXML
 	private TableColumn<Orders, String> orderIDCol, venueIDCol, eventIDCol, venueNameOCol, eventNameOCol, commissionsCol, clientCol, dateCol, timeCol; 
 	
-	
-	public Staff() {
-		
-	}
-	
+	//exit button
 	public void btnExit(ActionEvent event) {
 		Stage stage = (Stage) exitBtn.getScene().getWindow();
 		stage.close();
 	}
 	
+	//csv page btn
 	public void btnCSVFiles(ActionEvent event) throws IOException {
 		Main main = new Main();
 		main.changeScene("CSVPage.fxml");
 	}
 	
+	//edit account btn
 	public void btnEditAccount(ActionEvent event) throws SQLException{
 		DefaultMenu menuFunctions = new DefaultMenu();
 		String userIDtoEdit = menuFunctions.getID(this.currUser);
@@ -180,6 +178,7 @@ public class Staff {
 		editAccountLastNameField.clear();
 	}
 	
+	//On click on venues table for venue details
 	public void onClickVenueRow(MouseEvent event) throws SQLException {
 	    if (venueViewMain.getSelectionModel().getSelectedItem() != null) {
 	        String venueName = venueViewMain.getSelectionModel().getSelectedItem().NameProperty().get();
@@ -189,6 +188,7 @@ public class Staff {
 	    }		
 	}
 	
+	//search venue btn
 	public void btnSearchVenue(ActionEvent event) throws SQLException {
 		String nameSearch = venueNameField.getText().toString();
 		String category = venueCategoryMenu.getText().toString();
@@ -208,6 +208,7 @@ public class Staff {
 		venueCategoryMenu.setText("Category");
 	}
 	
+	//on click event table for event details
 	public void onClickEventRow(MouseEvent event) throws SQLException {
 	    if (eventViewMain.getSelectionModel().getSelectedItem() != null) {
 	        String eventName = eventViewMain.getSelectionModel().getSelectedItem().TitleProperty().get();
@@ -217,6 +218,7 @@ public class Staff {
 	    }	
 	}
 	
+	//returns times available for booking on click
 	public void onClickMakeBookingTimeSelection(MouseEvent event) throws SQLException {
 		makeBookingTimeMenu.getItems().clear();
 		String venueName = makeBookingVenueField.getText().toString();
@@ -245,6 +247,7 @@ public class Staff {
 		}
 	}
 	
+	//returns times available for edit booking on click
 	public void onClickEditBookingTimeSelection(MouseEvent event) throws SQLException {
 		editBookingTimeMenu.getItems().clear();
 		String bookingID = editBookingIDField.getText().toString();
@@ -286,6 +289,7 @@ public class Staff {
 		}
 	}
 	
+	//Make booking btn
 	public void btnMakeBooking(ActionEvent event) throws SQLException {
 		String venueName = makeBookingVenueField.getText().toString();
 		String eventName = makeBookingEventField.getText().toString();
@@ -317,6 +321,7 @@ public class Staff {
 		makeBookingTimeMenu.setText("Times Available");
 	}
 	
+	//Delete booking btn
 	public void btnDeleteBooking(ActionEvent event) throws SQLException {
 		String bookingID = delBookingIDField.getText().toString();
 		DefaultMenu menuFunctions = new DefaultMenu();
@@ -338,6 +343,7 @@ public class Staff {
 		delBookingIDField.clear();
 	}
 	
+	//Edit booking btn
 	public void btnEditBooking(ActionEvent event) throws SQLException {
 		String bookingID = editBookingIDField.getText().toString();
 		String venueName = editBookingVenueField.getText().toString();
@@ -397,6 +403,7 @@ public class Staff {
 		editBookingIDField.clear();
 	}
 	
+	//Auto match btn
 	public void btnAutoMatch(ActionEvent event) throws SQLException {
 		String eventName = venueMatchMenu.getText().toString();
 		
@@ -408,6 +415,7 @@ public class Staff {
 		}
 	}
 	
+	//On click menuButton to get all events
 	public void onClickAutoMatchVenueSelection(MouseEvent event) throws SQLException {
 		venueMatchMenu.getItems().clear();
 		DefaultMenu menuFunctions = new DefaultMenu();
@@ -422,6 +430,7 @@ public class Staff {
 		}
 	}
 	
+	//On click auto match table to fill the make booking fields with data
 	public void onClickAutoMatchRow(MouseEvent event) throws SQLException {
 	    if (venueMatchView.getSelectionModel().getSelectedItem() != null) {
 	    	makeBookingEventField.setText(venueMatchMenu.getText());
@@ -458,6 +467,7 @@ public class Staff {
 		conn.closeConnectionToDB();
 	}
 	
+	//Populates account details labels
 	private void populateAccountDetails() throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -469,12 +479,14 @@ public class Staff {
 		conn.closeConnectionToDB();
 	}
 	
+	//Populates venue table
 	private void populateVenueTable(ObservableList<Venue> venues) {
 		venueNameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
 		venueCategoryCol.setCellValueFactory(new PropertyValueFactory<>("Category"));
 		venueViewMain.setItems(venues);
 	}
 	
+	//populate venue categories menuButton
 	private void populateVenueCategoryMenu(ArrayList<String> categories) {
 		venueCategoryMenu.getItems().clear();
 		for(int i = 0; i < categories.size(); i++) {
@@ -487,12 +499,14 @@ public class Staff {
 		}
 	}
 	
+	//Populate venue detailed table
 	private void populateVenueViewDetailed(ObservableList<ItemDetails> venueDetails) {
 		venueItemCol.setCellValueFactory(new PropertyValueFactory<>("Item"));
 		venueInfoCol.setCellValueFactory(new PropertyValueFactory<>("Info"));
 		venueViewDetailed.setItems(venueDetails);
 	}
 	
+	//populate events table
 	private void populateEventTable(ObservableList<Event> events) {
 		eventNameCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
 		eventArtistCol.setCellValueFactory(new PropertyValueFactory<>("Artist"));
@@ -502,12 +516,14 @@ public class Staff {
 		eventViewMain.setItems(events);
 	}
 	
+	//populate event detailed table
 	private void populateEventViewDetailed(ObservableList<ItemDetails> eventDetails) {
 		eventItemCol.setCellValueFactory(new PropertyValueFactory<>("Item"));
 		eventInfoCol.setCellValueFactory(new PropertyValueFactory<>("Info"));
 		eventViewDetailed.setItems(eventDetails);
 	}
 	
+	//populate bookings table
 	private void populateBookingTable(ObservableList<Booking> bookings) {
 		bookingIDCol.setCellValueFactory(new PropertyValueFactory<>("BookingID"));
 		bookingEventCol.setCellValueFactory(new PropertyValueFactory<>("Event"));
@@ -518,6 +534,7 @@ public class Staff {
 		bookingView.setItems(bookings);
 	}
 	
+	//populate orders table
 	private void populateOrderTable(ObservableList<Orders> orders) {
 		orderIDCol.setCellValueFactory(new PropertyValueFactory<>("orderNum"));
 		venueIDCol.setCellValueFactory(new PropertyValueFactory<>("venueNum"));
@@ -531,6 +548,7 @@ public class Staff {
 		ordersView.setItems(orders);
 	}
 	
+	//Populate auto match table
 	private void populateVenueMatchTable(ObservableList<VenueMatch> venueMatchs) {
 		venueNameACol.setCellValueFactory(new PropertyValueFactory<>("venueName"));
 		venueCategoryACol.setCellValueFactory(new PropertyValueFactory<>("category"));

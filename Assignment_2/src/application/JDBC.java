@@ -13,13 +13,16 @@ import application.transactionData.bookingData;
 import application.transactionData.eventData;
 import application.transactionData.venuesData;
 
+//Class for connecting to the db
 public class JDBC {
 	private Connection connection = null;
 	
+	//Connects
 	public void connectToDB() throws SQLException {
 		connection = DriverManager.getConnection("jdbc:sqlite:Database/Assignment2DB.db");
 	}
 	
+	//Disconnects
 	public void closeConnectionToDB() throws SQLException {
 		if(connection != null) {
 			connection.close();
@@ -27,6 +30,7 @@ public class JDBC {
 		connection = null;
 	}
 	
+	//Returns if the username and password are correct
 	public boolean isValidCredentials(String username, String password) throws SQLException {
 		Statement usrValidation = connection.createStatement();
 		ResultSet results = usrValidation.executeQuery("SELECT * FROM Users WHERE Username = '" + username + "' AND Password = '"+ password +"'");
@@ -37,6 +41,7 @@ public class JDBC {
 		return false;
 	}
 	
+	//Returns if the user is a manager based on the username
 	public boolean isManager(String username) throws SQLException {
 		Statement managerValidation = connection.createStatement();
 		
@@ -52,6 +57,7 @@ public class JDBC {
 		return false;
 	}
 	
+	//Returns a firstname and lastname based on the username
 	public String returnName(String username) throws SQLException {
 		String firstAndLast = "";
 		Statement nameRetrieval = connection.createStatement();
@@ -62,6 +68,7 @@ public class JDBC {
 		return firstAndLast;
 	}
 	
+	//Returns all users from the db
 	public ResultSet usrReturnDB() throws SQLException{
 		Statement userRetrieval = connection.createStatement();
 		ResultSet results = userRetrieval.executeQuery("SELECT userID, username, firstName, lastName, IsManager FROM Users");
@@ -70,6 +77,7 @@ public class JDBC {
 		
 	}
 	
+	//Adds a user to the db and returns if this was successful or not
 	public boolean addUserToDB(String query) throws SQLException {
 		Statement addUser = connection.createStatement();
 		int returnVal = 0;
@@ -87,6 +95,7 @@ public class JDBC {
 		}
 	}
 	
+	//Returns a valid userID that can be used for a new user
 	public int validID() throws SQLException {
 		Statement findID = connection.createStatement();
 		
@@ -105,6 +114,7 @@ public class JDBC {
 		return id;
 	}
 	
+	//If a user is present based on the id
 	public boolean findID(int id) throws SQLException {
 		Statement findID = connection.createStatement();
 		
@@ -117,6 +127,7 @@ public class JDBC {
 		}
 	}
 	
+	//Deletes an account based on the userID
 	public boolean deleteAccount(int id) {
 		Statement delAccount;
 		try {
@@ -128,6 +139,7 @@ public class JDBC {
 		}
 	}
 	
+	//Returns all user details based on id
 	public ResultSet returnAllUsrDetails(String id) throws SQLException {
 		Statement userRetrieval = connection.createStatement();
 		ResultSet results = userRetrieval.executeQuery("SELECT username, firstName, lastName, password, IsManager FROM Users WHERE userID = '" + id + "'");
@@ -135,6 +147,7 @@ public class JDBC {
 		return results;
 	}
 	
+	//Returns userID based on username
 	public ResultSet returnUserID(String username) throws SQLException {
 		Statement userRetrieval = connection.createStatement();
 		ResultSet result = userRetrieval.executeQuery("SELECT userID FROM Users WHERE username = '" + username + "';");
@@ -142,12 +155,14 @@ public class JDBC {
 		return result;
 	}
 	
+	//Returns password, first and last name based on username
 	public ResultSet returnUserDetails(String username) throws SQLException {
 		Statement userRetrieval = connection.createStatement();
 		ResultSet result = userRetrieval.executeQuery("SELECT password, firstName, lastName FROM Users WHERE username = '"+username+"';");
 		return result;
 	}
 	
+	//Imports processed CSV data into the db
 	public boolean importRequestDataCSV(ArrayList<ArrayList<String>> requestData) {
 		Statement requestDataImport;
 		try {
@@ -178,6 +193,7 @@ public class JDBC {
 		}
 	}
 	
+	//Edits clients list based on incoming clients
 	public void editClientList(ArrayList<String> clients) throws SQLException {
 		Statement clientsRequest = connection.createStatement();
 		for(int i = 0; i < clients.size(); i++) {
@@ -190,6 +206,7 @@ public class JDBC {
 		}
 	}
 	
+	//Returns the size of the clients table
 	public int sizeOfClientsTable() throws SQLException {
 		Statement clients = connection.createStatement();
 		ResultSet results = clients.executeQuery("SELECT * FROM Clients");
@@ -202,6 +219,7 @@ public class JDBC {
 		return c;
 	}
 	
+	//Returns a clients id based on clietname
 	public int returnClientID(String clientName) throws SQLException {
 		Statement client = connection.createStatement();
 		
@@ -212,6 +230,7 @@ public class JDBC {
 		return clientID;
 	}
 	
+	//Imports processed venue csv data into db
 	public boolean importVenueDataCSV(ArrayList<ArrayList<String>> venueData) {
 		Statement venueDataImport;
 		try {
@@ -230,6 +249,7 @@ public class JDBC {
 		}
 	}
 	
+	//Returns venues based on a name and/or category
 	public ResultSet venueReturnDB(String name, String category) throws SQLException {
 		Statement venueReturn = connection.createStatement();
 		ResultSet venues = null;
@@ -247,36 +267,42 @@ public class JDBC {
 		return venues;
 	}
 	
+	//Returns the amount of categories
 	public ResultSet returnCategories() throws SQLException {
 		Statement categoryReturn = connection.createStatement();
 		ResultSet categories = categoryReturn.executeQuery("SELECT DISTINCT Category FROM Venues;");
 		return categories;
 	}
 	
+	//Returns venue details based on venue name
 	public ResultSet returnVenueDetails(String name) throws SQLException {
 		Statement venueDetReturn = connection.createStatement();
 		ResultSet venueDetails = venueDetReturn.executeQuery("SELECT Capacity, Suitable_For, Category, Booking_Price FROM Venues WHERE Name = '"+name+"'");
 		return venueDetails;
 	}
 	
+	//Returns all events
 	public ResultSet returnEvents() throws SQLException {
 		Statement eventReturn = connection.createStatement();
 		ResultSet events = eventReturn.executeQuery("SELECT Events.EventID, Events.Title, Events.Artist, Events.Date, Events.Time, Events.Duration, Events.Target_Audience, Events.Type, Events.Category, Events.BookingID, Clients.ClientName FROM Events INNER JOIN Clients ON Events.ClientID = Clients.ClientID");
 		return events;
 	}
 	
+	//Returns event details based on eventname
 	public ResultSet returnEventDetails(String name) throws SQLException {
 		Statement eventDetReturn = connection.createStatement();
 		ResultSet eventDetails = eventDetReturn.executeQuery("SELECT Events.Artist, Events.Date, Events.Time, Events.Duration, Events.Target_Audience, Events.Type, Events.Category, Clients.ClientName FROM Events INNER JOIN Clients ON Events.ClientID = Clients.ClientID WHERE Events.Title = '"+name+"'");
 		return eventDetails;
 	}
 
+	//Returns all bookings
 	public ResultSet returnBookings() throws SQLException {
 		Statement bookingsReturn = connection.createStatement();
 		ResultSet bookings = bookingsReturn.executeQuery("SELECT Bookings.BookingID, Events.Title, Venues.Name, Bookings.Date, Bookings.Time, Events.Duration FROM Bookings INNER JOIN Events ON Events.EventID = Bookings.EventID INNER JOIN Venues ON Venues.VenueID = Bookings.VenueID;");
 		return bookings;
 	}
 	
+	//Returns if the event is valid or not
 	public boolean isValidEvent(String event) throws SQLException {
 		Statement eventReturn = connection.createStatement();
 		ResultSet eventR = eventReturn.executeQuery("SELECT * FROM Events WHERE Title = '"+event+"';");
@@ -287,6 +313,7 @@ public class JDBC {
 		}
 	}
 	
+	//Returns if the venue is valid or not
 	public boolean isValidVenue(String venue) throws SQLException {
 		Statement venueReturn = connection.createStatement();
 		ResultSet venueR = venueReturn.executeQuery("SELECT * FROM Venues WHERE Name = '"+venue+"';");
@@ -297,12 +324,14 @@ public class JDBC {
 		}
 	}
 
+	//Returns all the booked times for the selected venue, date and event
 	public ResultSet returnAllTimesUnavailable(String venueName, String eventName, String eventDate) throws SQLException {
 		Statement dateReturn = connection.createStatement();
 		ResultSet result = dateReturn.executeQuery("SELECT Bookings.Time, Events.Duration FROM Bookings INNER JOIN Events ON Events.EventID = Bookings.EventID INNER JOIN Venues ON Venues.VenueID = Bookings.VenueID WHERE Venues.Name = '"+venueName+"' AND Bookings.Date = '"+eventDate+"';");
 		return result;
 	}
 
+	//Makes a booking a returns if it was successful or not
 	public boolean makeBookingDB(String venueName, String eventName, String eventDate, String bookingTime) throws SQLException {
 		Statement makeBooking = connection.createStatement();
 		int VenueID;
@@ -341,12 +370,14 @@ public class JDBC {
 		return true;
 	}
 	
+	//Returns the duration of a specified event
 	public ResultSet returnEventDuration(String eventName) throws SQLException {
 		Statement findDuration = connection.createStatement();
 		ResultSet result = findDuration.executeQuery("SELECT Duration FROM Events WHERE Title = '"+eventName+"';");
 		return result;
 	}
 	
+	//Returns a valid ID to be used for a new booking
 	public int validBookingID() throws SQLException {
 		Statement findID = connection.createStatement();
 		
@@ -365,6 +396,7 @@ public class JDBC {
 		return id;
 	}
 
+	//Returns if an event is already booked
 	public boolean eventBooked(String eventName) throws SQLException {
 		Statement eventBooked = connection.createStatement();
 		
@@ -376,6 +408,7 @@ public class JDBC {
 		}
 	}
 
+	//Returns if the id is present in the db
 	public boolean isValidBookingIDDB(String id) throws SQLException {
 		Statement bID = connection.createStatement();
 		
@@ -387,6 +420,7 @@ public class JDBC {
 		}
 	}
 
+	//Deletes a booking based on id
 	public boolean deleteBooking(String id) throws SQLException {
 		Statement delBooking;
 		try {
@@ -399,12 +433,14 @@ public class JDBC {
 		}
 	}
 
+	//Returns a booking based on ID
 	public ResultSet returnBookingOnIDDB(String id) throws SQLException {
 		Statement returnBooking = connection.createStatement();
 		ResultSet result = returnBooking.executeQuery("SELECT Venues.Name, Events.Title, Bookings.Date, Bookings.Time FROM Bookings INNER JOIN Venues ON Venues.VenueID = Bookings.VenueID INNER JOIN Events ON Events.EventID = Bookings.EventID WHERE Bookings.BookingID = '"+id+"';");
 		return result;
 	}
 
+	//Returns if the event is booked (for edit function)
 	public ResultSet eventBookedEdit(String eventName, String bookingID) throws SQLException {
 		Statement eventBooked = connection.createStatement();
 		
@@ -412,6 +448,7 @@ public class JDBC {
 		return result;
 	}
 
+	//Returns all the names of events
 	public ResultSet returnAllEventNames() throws SQLException {
 		Statement events = connection.createStatement();
 		
@@ -419,12 +456,14 @@ public class JDBC {
 		return result;
 	}
 
+	//Returns all the orders
 	public ResultSet returnOrdersDB() throws SQLException {
 		Statement orders = connection.createStatement();
 		ResultSet result = orders.executeQuery("SELECT Bookings.BookingID, Bookings.VenueID, Bookings.EventID, Venues.Name, Events.Title, Clients.ClientName, Bookings.Date, Bookings.time FROM Bookings INNER JOIN Events ON Events.EventID = Bookings.EventID INNER JOIN Clients ON Events.ClientID = Clients.ClientID INNER JOIN Venues ON Venues.VenueID = Bookings.VenueID;");
 		return result;
 	}
 	
+	//Calculates commission based on event duration and venue booking price
 	public int calculateCommission(String eventName, String venueName) throws SQLException {
 		Statement comm = connection.createStatement();
 		ResultSet result = comm.executeQuery("SELECT Venues.Booking_Price, Events.Duration, Clients.ClientName FROM Bookings INNER JOIN Venues ON Venues.VenueID = Bookings.VenueID INNER JOIN Events ON Events.EventID = Bookings.EventID INNER JOIN Clients ON Events.ClientID = Clients.ClientID WHERE Events.Title = '"+eventName+"' AND Venues.Name = '"+venueName+"';");
@@ -449,6 +488,7 @@ public class JDBC {
 		return 0;
 	}
 
+	//Returns automatch venues based on the event requirements
 	public ResultSet returnAutoMatch(String eventName, int stage) throws SQLException {
 		Statement auto = connection.createStatement();
 		ResultSet result = null;
@@ -629,6 +669,7 @@ public class JDBC {
 		return result;
 	}
 
+	//Returns the date of an event
 	public String findEventDate(String eventName) throws SQLException {
 		Statement conn = connection.createStatement();
 		ResultSet result = conn.executeQuery("SELECT Date FROM Events WHERE Title = '"+eventName+"'");
@@ -636,36 +677,42 @@ public class JDBC {
 		return date;
 	}
 
+	//Returns all users
 	public ResultSet returnAllUsers() throws SQLException {
 		Statement conn = connection.createStatement();
 		ResultSet result = conn.executeQuery("SELECT * FROM Users;");
 		return result;
 	}
 
+	//Returns all clients
 	public ResultSet returnAllClients() throws SQLException {
 		Statement conn = connection.createStatement();
 		ResultSet result = conn.executeQuery("SELECT * FROM Clients;");
 		return result;
 	}
-
+	
+	//Returns all venues
 	public ResultSet returnAllVenues() throws SQLException {
 		Statement conn = connection.createStatement();
 		ResultSet result = conn.executeQuery("SELECT * FROM Venues;");
 		return result;
 	}
 
+	//Returns all events
 	public ResultSet returnAllEvents() throws SQLException {
 		Statement conn = connection.createStatement();
 		ResultSet result = conn.executeQuery("SELECT * FROM Events;");
 		return result;
 	}
 
+	//Returns all bookings
 	public ResultSet returnAllBookings() throws SQLException {
 		Statement conn = connection.createStatement();
 		ResultSet result = conn.executeQuery("SELECT * FROM Bookings;");
 		return result;
 	}
 
+	//Import users data from backup
 	public boolean importUsersData(ArrayList<userData> users) {
 		try {
 			Statement stmt = connection.createStatement();
@@ -679,6 +726,7 @@ public class JDBC {
 		}
 	}
 
+	//Import clients data from backup
 	public boolean importClientsData(ArrayList<clientData> clients) {
 		try {
 			Statement stmt = connection.createStatement();
@@ -692,6 +740,7 @@ public class JDBC {
 		}
 	}
 
+	//Import venues data from backup
 	public boolean importVenuesData(ArrayList<venuesData> venues) {
 		try {
 			Statement stmt = connection.createStatement();
@@ -705,6 +754,7 @@ public class JDBC {
 		}
 	}
 
+	//Import events data from backup
 	public boolean importEventsData(ArrayList<eventData> events) {
 		try {
 			Statement stmt = connection.createStatement();
@@ -718,6 +768,7 @@ public class JDBC {
 		}
 	}
 
+	//Return bookings data from backup
 	public boolean importBookingsData(ArrayList<bookingData> bookings) {
 		try {
 			Statement stmt = connection.createStatement();
@@ -731,12 +782,14 @@ public class JDBC {
 		}
 	}
 
+	//Return order summary by client
 	public ResultSet returnClientOrders() throws SQLException {
 		Statement stmt = connection.createStatement();
 		ResultSet result = stmt.executeQuery("SELECT Clients.ClientName, SUM((Venues.Booking_Price * Events.Duration)/10) FROM Clients INNER JOIN Events ON Events.ClientID = Clients.ClientID INNER JOIN Bookings ON Events.EventID = Bookings.EventID INNER JOIN Venues ON Bookings.VenueID = Venues.VenueID GROUP BY Clients.ClientName;");
 		return result;
 	}
 
+	//Return number of events per client
 	public int numOfEventsByClient(String clientname) throws SQLException {
 		Statement stmt = connection.createStatement();
 		ResultSet result = stmt.executeQuery("SELECT COUNT(Bookings.BookingID) FROM Clients INNER JOIN Events ON Events.ClientID = Clients.ClientID INNER JOIN Bookings ON Bookings.EventID = Events.EventID WHERE ClientName = '"+clientname+"';");
@@ -744,18 +797,21 @@ public class JDBC {
 		return count;
 	}
 
+	//Returns pie graph data
 	public ResultSet returnPieGraphData() throws SQLException {
 		Statement stmt = connection.createStatement();
 		ResultSet result = stmt.executeQuery("SELECT Venues.Name, COUNT(Bookings.BookingID) FROM Venues LEFT JOIN Bookings ON Bookings.VenueID = Venues.VenueID GROUP BY Venues.Name;");
 		return result;
 	}
 
+	//Returns bar chart data
 	public ResultSet returnBarChartData() throws SQLException {
 		Statement stmt = connection.createStatement();
 		ResultSet result = stmt.executeQuery("SELECT Events.Title, (Venues.Booking_Price * Events.Duration)/10, (Events.Duration * Venues.Booking_Price) FROM Bookings INNER JOIN Events ON Events.EventID = Bookings.EventID INNER JOIN Venues ON Venues.VenueID = Bookings.VenueID;");
 		return result;
 	}
 
+	//Returns client name by the event
 	public String returnClientByEvent(String eventName) throws SQLException {
 		Statement stmt = connection.createStatement();
 		ResultSet result = stmt.executeQuery("SELECT ClientName FROM Clients INNER JOIN Events ON Events.ClientID = Clients.ClientID WHERE Events.Title = '"+eventName+"';");

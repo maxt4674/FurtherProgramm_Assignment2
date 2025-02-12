@@ -23,11 +23,12 @@ public class Login {
 	private Label LoginLabel;
 	
 	
-	
+	//Login btn
 	public void btnLoginOnClick(ActionEvent event) throws IOException, SQLException{
 		validateLogin();
 	}
 	
+	//Validates user credentials to see if they are a user
 	private void validateLogin() throws IOException, SQLException{
 		JDBC conn = new JDBC();
 		conn.connectToDB();

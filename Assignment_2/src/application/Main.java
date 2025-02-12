@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
-
+//main class that runs the application
 public class Main extends Application {
 	private static Stage stg;
 	@Override

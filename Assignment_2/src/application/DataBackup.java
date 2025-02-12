@@ -20,18 +20,19 @@ public class DataBackup {
 	@FXML
 	private Label alertLabelImport, alertLabelbackup;
 	
-	
+	//Exit button
 	public void btnExit(ActionEvent event) {
 		Stage stage = (Stage) exitBtn.getScene().getWindow();
 		stage.close();
 	}
 	
-	//Need to go back to either staff or manager page
+	//returns to user menu depending on user
 	public void btnMainMenu(ActionEvent event) throws IOException {
 		Main main = new Main();
 		main.changeScene("ManagerPage.fxml");
 	}
 	
+	//Backups up transactions
 	public void btnBackupTransaction(ActionEvent event) throws SQLException {
 		ManagerMenu menuFunctions = new ManagerMenu();
 		if(menuFunctions.backupTransactionData()) {
@@ -42,6 +43,7 @@ public class DataBackup {
 		
 	}
 	
+	//backups up master data
 	public void btnBackupMaster(ActionEvent event) throws SQLException {
 		ManagerMenu menuFunctions = new ManagerMenu();
 		if(menuFunctions.backupMasterData()) {
@@ -52,6 +54,7 @@ public class DataBackup {
 
 	}
 	
+	//imports transaction data
 	public void btnImportTransaction(ActionEvent event) throws ClassNotFoundException, SQLException {
 		transactionData data = new transactionData();
 		ManagerMenu menuFunctions = new ManagerMenu();
@@ -66,6 +69,7 @@ public class DataBackup {
 		}
 	}
 	
+	//imports master data
 	public void btnImportMaster(ActionEvent event) throws ClassNotFoundException, SQLException {
 		masterData data = new masterData();
 		ManagerMenu menuFunctions = new ManagerMenu();

@@ -17,8 +17,10 @@ import application.transactionData.venuesData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+//Menu functions class for only manager functions
 public class ManagerMenu extends DefaultMenu {
 	
+	//Returns all users from JDBC and parses them into a list
 	public ObservableList<User> returnUsers() throws SQLException{
 		ObservableList<User> users = FXCollections.observableArrayList();
 		
@@ -36,6 +38,7 @@ public class ManagerMenu extends DefaultMenu {
 		return users;
 	}
 	
+	//Deletes a user account
 	public boolean delAccount(String userID) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -59,6 +62,7 @@ public class ManagerMenu extends DefaultMenu {
 		}
 	}
 	
+	//Adds an account based on the params
 	public boolean addAccount(String username, String password, String firstName, String lastName, boolean isManager) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -79,6 +83,7 @@ public class ManagerMenu extends DefaultMenu {
 		}
 	}
 	
+	//backs up the master data
 	public boolean backupMasterData() throws SQLException {
 		ArrayList<userData> users = new ArrayList<userData>();
 		ArrayList<clientData> clients = new ArrayList<clientData>();
@@ -105,6 +110,7 @@ public class ManagerMenu extends DefaultMenu {
 		}
 	}
 	
+	//backs up the transaction data
 	public boolean backupTransactionData() throws SQLException {
 		ArrayList<venuesData> venues = new ArrayList<venuesData>();
 		ArrayList<eventData> events = new ArrayList<eventData>();
@@ -137,6 +143,7 @@ public class ManagerMenu extends DefaultMenu {
 		}
 	}
 
+	//Imports master data
 	public boolean importMasterData(ArrayList<userData> users, ArrayList<clientData> clients) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -154,6 +161,7 @@ public class ManagerMenu extends DefaultMenu {
 		return true;
 	}
 	
+	//Imports transaction data
 	public boolean importTransactionData(ArrayList<venuesData> venues, ArrayList<eventData> events, ArrayList<bookingData> bookings) throws SQLException {
 		JDBC conn = new JDBC();
 		conn.connectToDB();
@@ -176,6 +184,7 @@ public class ManagerMenu extends DefaultMenu {
 		return true;
 	}
 	
+	//Returns if the backup file is valid
 	public boolean isBackupFileValid(String filename) {
 		File myFile = new File("src/Backups/" + filename);
 		if(myFile.exists()) {
@@ -185,6 +194,7 @@ public class ManagerMenu extends DefaultMenu {
 		}
 	}
 
+	//Returns a list of the client order data
 	public ObservableList<ClientOrders> returnClientOrders() throws SQLException {
 		ObservableList<ClientOrders> orders = FXCollections.observableArrayList();
 		JDBC conn = new JDBC();
@@ -206,6 +216,7 @@ public class ManagerMenu extends DefaultMenu {
 		return orders;
 	}
 
+	//Returns a list for the pie graph to use
 	public ObservableList<PieGraphData> returnPieGraphData() throws SQLException {
 		ObservableList<PieGraphData> data = FXCollections.observableArrayList();
 		JDBC conn = new JDBC();
@@ -219,6 +230,7 @@ public class ManagerMenu extends DefaultMenu {
 		return data;
 	}
 
+	//Returns a list for the bar chart to use
 	public ObservableList<ChartData> returnChartData() throws SQLException {
 		ObservableList<ChartData> data = FXCollections.observableArrayList();
 		JDBC conn = new JDBC();

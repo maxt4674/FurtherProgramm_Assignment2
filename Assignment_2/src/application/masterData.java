@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//Class for parsing and creating objects for the master data
 public class masterData {
 	@SuppressWarnings("serial")
 	public static class userData implements Serializable{
@@ -74,6 +75,7 @@ public class masterData {
 		}
 	}
 	
+	//Backs up the data
 	public boolean backupData(ArrayList<userData> users, ArrayList<clientData> clients) {
 		File dataFile = new File("src/Backups/masterdata.lmvm");
 	    try(FileOutputStream fos = new FileOutputStream(dataFile); ObjectOutputStream oos = new ObjectOutputStream(fos);){
@@ -89,6 +91,7 @@ public class masterData {
 	    }
 	}
 	
+	//Imports the backup data
 	@SuppressWarnings("unchecked")
 	public boolean importBackupData() throws ClassNotFoundException, SQLException {
 		ArrayList<userData> users = new ArrayList<userData>();

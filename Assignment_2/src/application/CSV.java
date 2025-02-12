@@ -27,13 +27,13 @@ public class CSV {
 	@FXML
 	private Label alertLabel;
 	
-	
+	//Exit button
 	public void btnExit(ActionEvent event) {
 		Stage stage = (Stage) exitBtn.getScene().getWindow();
 		stage.close();
 	}
 	
-	//Need to go back to either staff or manager page
+	//Returns to user menu depending on user
 	public void btnMainMenu(ActionEvent event) throws IOException, SQLException {
 		Main main = new Main();
 		boolean isManager = false;
@@ -57,6 +57,7 @@ public class CSV {
 		
 	}
 	
+	//Imports requests from csv
 	public void btnImportRequests(ActionEvent event) throws SQLException {
 		String filename = requestsFileNameField.getText().toString();
 		if(filename.length() > 0) {
@@ -108,6 +109,8 @@ public class CSV {
 		}
 	}
 	
+	
+	//Import venues from csv
 	public void btnImportVenues(ActionEvent event) throws SQLException {
 		String filename = venuesFileNameField.getText().toString();
 		if(filename.length() > 0) {
@@ -159,6 +162,7 @@ public class CSV {
 		}
 	}
 	
+	//Returns if csv file is valid
 	public boolean isFileValid(String filename) {
 		File myFile = new File("src/CSVFiles/" + filename);
 		if(myFile.exists()) {
